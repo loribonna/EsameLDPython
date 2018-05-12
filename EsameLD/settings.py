@@ -79,10 +79,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'django_ld_esame',
-        'PORT': 27017
+        'PORT': 27017,
+        'HOST': os.environ.get('MONGO_URI', default='')
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

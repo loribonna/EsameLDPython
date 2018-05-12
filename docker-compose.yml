@@ -1,0 +1,19 @@
+version: '2.1'
+
+services:
+  esameld:
+    image: esameld
+    container_name: esameld
+    command: python3 manage.py runserver 0.0.0.0:8000
+    build: .
+    environment:
+      - MONGO_URI=mongodb
+    ports:
+      - "8000:8000"
+    links:
+      - mongodb
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
