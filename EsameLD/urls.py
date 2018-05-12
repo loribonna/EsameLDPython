@@ -20,5 +20,6 @@ from django.conf.urls import url, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^items/', include('items.urls')),
-    url(r'^users/', include('users.urls'))
+    url(r'^users/', include('users.urls')),
+    url(r'.*', include('pageNotFound.urls'))
 ]
