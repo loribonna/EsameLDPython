@@ -4,9 +4,9 @@
   "description": "",
   "scripts": {
     "postinstall": "npm run build",
-    "start": "python manage.py runserver 0.0.0.0:8000",
+    "start": "cd ./DjangoRoot & python manage.py runserver 0.0.0.0:8000",
     "build": "tsc --p ./tsconfig.json",
-    "resolve_migrations": "python manage.py makemigrations & python manage.py migrate"
+    "resolve_migrations": "cd ./DjangoRoot & python manage.py makemigrations & python manage.py migrate"
   },
   "repository": {
     "type": "git",

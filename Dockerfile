@@ -9,6 +9,10 @@ RUN python3 -m pip install -r requirements.txt
 
 RUN mkdir /code
 WORKDIR /app
-ADD . /app
+ADD manage.py /app
+ADD EsameLD /app/EsameLD
+ADD items /app/items
+ADD pageNotFound /app/pageNotFound
+ADD users /app/users
 
 EXPOSE 8000
