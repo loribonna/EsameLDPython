@@ -1,0 +1,21 @@
+{%extends './struct_base/struct_base.html'%}
+
+{% block extra_head_content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" media="screen" href="{% static 'items/items.css' %}" />
+{% load static %}
+<script src='{% static "items/items.js" %}'></script>
+{%endblock%}
+
+{%block content%}
+
+<div id="app">
+    <p> [[ title ]] </p>
+    <ul>
+        <li v-for="day in {{days}}">
+            <h4> Day [[day]] </h4>
+        </li>
+    </ul>
+</div>
+
+Items Base {%endblock%}
