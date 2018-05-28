@@ -9,10 +9,19 @@ RUN python3 -m pip install -r requirements.txt
 
 RUN mkdir /code
 WORKDIR /app
+# Adding static dirs and files
 ADD manage.py /app
 ADD EsameLD /app/EsameLD
-ADD items /app/items
+ADD templates /app/templates
+ADD static /app/static
+
+# Adding apps
+ADD login /app/login
+ADD map /app/map
+ADD drivers /app/drivers
+ADD clients /app/clients
+ADD travels /app/travels
+
 ADD pageNotFound /app/pageNotFound
-ADD users /app/users
 
 EXPOSE 8000
