@@ -11,11 +11,13 @@
 {%block content%}
 
 <div id="app">
-    <form method="POST">
+    <form method="POST" @submit="handleLogin" class="ld_form">
         {% csrf_token %}
-        <input id="username" name="username" type="text" placeholder="username"></input>
-        <input id="password" name="password" type="password" value=""></input>
-        <ld-button text="ROBA" v-on:click='login'></ld-button>
+        <div class="ld_form_row">
+            <text-input style="flex:1" name="username" placeholder="username" v-model="user"  v-on:valid="validCheck" :enable_error="enable_error" required></text-input>
+            <text-input style="flex:1" name="password" placeholder="password" v-model="pass" v-on:valid="validCheck" :enable_error="enable_error"></text-input>
+        </div>
+        <ld-button>Login</ld-button>
     </form>
 </div>
 

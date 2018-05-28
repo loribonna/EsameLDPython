@@ -1,0 +1,9 @@
+.ld_form {
+    max-width: 70%;
+    position: relative;
+}
+
+.ld_form_row{
+    display: flex;
+    flex-direction: row;
+}

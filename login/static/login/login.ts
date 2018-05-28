@@ -4,11 +4,29 @@ window.onload = function () {
         delimiters: ['[[', ']]'],
         el: '#app',
         components: {
-            'ld-button': buttonComponent 
+            'ld-button': buttonComponent,
+            'text-input': textInputComponent
+        },
+        data: {
+            user: null,
+            pass: null,
+            enable_error: false,
+            valid: true,
+            components: {}
         },
         methods: {
-            login: (event) => {
-                console.log(event);
+            handleLogin: function (event) {
+                for (const comp in this.components) {
+                    if(!this.components[comp]){
+                        event.preventDefault();
+                        this.enable_error=true;
+                        return;
+                    }
+                }
+                event.preventDefault();
+            },
+            validCheck: function (event) {
+                this.components[event.name] = event.value
             }
         }
     })
