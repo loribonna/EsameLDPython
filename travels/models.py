@@ -5,7 +5,7 @@ import datetime
 
 DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S'
 
-class Travels(models.Model):
+class Travel(models.Model):
     travel_id=models.UUIDField(),
     client=models.ForeignKey(Client, on_delete=models.CASCADE)
     driver=models.ForeignKey(Driver, on_delete=models.CASCADE)
