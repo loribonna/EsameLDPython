@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+
+{% block extra_head_content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" media="screen" href="{% static 'drivers/drivers.css' %}" />
+{% load static %}
+<script src='{% static "drivers/drivers.js" %}'></script>
+{%endblock%}
+
+{%block content%}
+
+<div id="app">
+    <p> [[ title ]] </p>
+    <ul>
+        <li v-for="day in {{days}}">
+            <h4> Day [[day]] </h4>
+        </li>
+    </ul>
+</div>
+
+Items Base {%endblock%}

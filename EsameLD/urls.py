@@ -23,6 +23,5 @@ urlpatterns = [
     url(r'^$', RedirectView.as_view(url='clients/'), name='index'),
     url(r'^clients/', include('clients.urls')),
     url(r'^map', include('map.urls')),
-    url(r'^users/', include('users.urls')),
     url(r'.*', include('pageNotFound.urls'))
 ]
