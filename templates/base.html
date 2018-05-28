@@ -4,9 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Items</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    {% load static %}
+    <script src="{% static "js/main.js" %}"></script>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static "css/main.css" %}" />
     {% block extra_head_content %}{% endblock %}
 </head>
 

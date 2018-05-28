@@ -20,8 +20,9 @@ from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^$', RedirectView.as_view(url='clients/'), name='index'),
+    url(r'^$', RedirectView.as_view(url='login/'), name='index'),
     url(r'^clients/', include('clients.urls')),
     url(r'^map', include('map.urls')),
+    url(r'^login/', include('login.urls')),
     url(r'.*', include('pageNotFound.urls'))
 ]

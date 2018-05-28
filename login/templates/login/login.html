@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+
+{% block extra_head_content %}
+<title>Login</title>
+{% load static %}
+<link rel="stylesheet" type="text/css" media="screen" href="{% static "login/login.css" %}" />
+{% load static %}
+<script src="{% static "login/login.js" %}"></script>
+{%endblock%}
+
+{%block content%}
+
+<div id="app">
+    <form method="POST">
+        {% csrf_token %}
+        <input id="username" name="username" type="text" placeholder="username"></input>
+        <input id="password" name="password" type="password" value=""></input>
+        <ld-button text="ROBA" v-on:click='login'></ld-button>
+    </form>
+</div>
+
+{%endblock%}
