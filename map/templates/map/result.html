@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+
+{% block extra_head_content %}
+<title>Result</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+{% load static %}
+<link rel="stylesheet" type="text/css" media="screen" href="{% static "map/result.css" %}" />
+{% load static %}
+<script src="{% static "map/result.js" %}"></script>
+{%endblock%}
+
+{%block content%}
+
+<div id="app" class="ld-container list-group">
+    <div class="badge badge-light">
+        Tariffe da: [[this.formatLatLng(this.$route.query.start)]] a [[this.formatLatLng(this.$route.query.start)]]:
+    </div>
+    {% for result in results %}
+        <result-item :content="{{result}}"></result-item>
+    {% endfor %}
+</div>
+
+{%endblock%}
