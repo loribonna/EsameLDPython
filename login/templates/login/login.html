@@ -17,7 +17,7 @@
             <text-input style="flex:1" name="username" placeholder="username" v-model="user"  v-on:valid="validCheck" :enable_error="enable_error" required></text-input>
             <text-input style="flex:1" name="password" placeholder="password" v-model="pass" v-on:valid="validCheck" :enable_error="enable_error"></text-input>
         </div>
-        <ld-button>Login</ld-button>
+        <ld-button v-on:click="$emit(\'submit\', $event)" >Login</ld-button>
     </form>
 </div>
 

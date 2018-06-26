@@ -44,7 +44,7 @@ const leafletComponent = {
         </div>
         <position-label :markerPos="markers.start._latlng" :markerName="'start'" v-if="markers.start" v-on:delete="removeMarker">Inizio:<br/></position-label>
         <position-label btnType="danger" :markerPos="markers.end._latlng" :markerName="'end'" v-if="markers.end" v-on:delete="removeMarker">Fine:<br/></position-label>
-        <ld-button v-on:submit="sendData" style="margin: 5px" v-if="markers.start && markers.end" >Mostra tariffe</ld-button>
+        <ld-button v-on:click="sendData" style="margin: 5px" v-if="markers.start && markers.end" >Mostra tariffe</ld-button>
     </div>
     </div>`,
     components: {

@@ -10,12 +10,8 @@
 {%block content%}
 
 <div id="app">
-    <p> [[ title ]] </p>
-    <ul>
-        <li v-for="day in {{days}}">
-            <h4> Day [[day]] </h4>
-        </li>
-    </ul>
+    <client-header></client-header>
+    <travel-list :content="{{travels}}"></travel-list>
 </div>
 
-Items Base {%endblock%}
+{%endblock%}
