@@ -13,6 +13,16 @@ html, body {
     left: 0;
 }
 
+.ld-start-marker {
+    color: blue;
+    font-size: 30px;
+}
+
+.ld-end-marker {
+    font-size: 30px;
+    color: red;
+}
+
 .ld-map {
     z-index: 1;
     position: relative;

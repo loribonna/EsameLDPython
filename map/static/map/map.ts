@@ -2,13 +2,14 @@
 const positionLabelComponent = {
     template: `
         <div style="padding: 5px; display:flex">
-            <button v-on:click="removeData" class="btn btn-primary">X</button><div class="badge badge-light">
+            <button v-on:click="removeData" :class=getClass()>X</button><div style="width:100%" class="badge badge-light">
             <slot></slot>{{getLatLngFormatted()}}
             </div>
         </div>`,
     props: [
         'markerPos',
-        'markerName'
+        'markerName',
+        'btnType'
     ],
     methods: {
         getLatLngFormatted() {
@@ -16,23 +17,40 @@ const positionLabelComponent = {
         },
         removeData() {
             this.$emit('delete', this.markerName);
+        },
+        getClass() {
+            return `btn btn-${this.btnType || 'primary'}`
         }
     }
 }
 
 const DEFAULT_CENTER = [41.8931, 12.4828];
 
+const createMarker = (pos: L.LatLng, className: String) => {
+    const icon = L.divIcon({
+        className: '',
+        iconSize: null,
+        html: "<div class='fa fa-map-marker " + className + "'></div>"
+    });
+    return L.marker(pos, { icon: icon });
+}
+
 const leafletComponent = {
     template: `<div id="map" class="ld-map">
     <div style="position:absolute; z-index:500; right:0px">
+        <div style="padding: 5px">
+            <span class="badge badge-light">Ora partenza: </span>
+            <text-input style="width:120px" :enable_error="enable_error" name="sTime" validator="timeValidator" v-on:valid="validCheck" v-model="sTime"></text-input>
+        </div>
         <position-label :markerPos="markers.start._latlng" :markerName="'start'" v-if="markers.start" v-on:delete="removeMarker">Inizio:<br/></position-label>
-        <position-label :markerPos="markers.end._latlng" :markerName="'end'" v-if="markers.end" v-on:delete="removeMarker">Fine:<br/></position-label>
+        <position-label btnType="danger" :markerPos="markers.end._latlng" :markerName="'end'" v-if="markers.end" v-on:delete="removeMarker">Fine:<br/></position-label>
         <ld-button v-on:submit="sendData" style="margin: 5px" v-if="markers.start && markers.end" >Mostra tariffe</ld-button>
     </div>
     </div>`,
     components: {
         'position-label': positionLabelComponent,
-        'ld-button': buttonComponent
+        'ld-button': buttonComponent,
+        'text-input': textInputComponent
     },
     data: function () {
         return {
@@ -40,19 +58,29 @@ const leafletComponent = {
             markers: {
                 start: null,
                 end: null
-            }
+            },
+            sTime: '9:30',
+            validators: {},
+            enable_error: false
         };
     },
     methods: {
         removeMarker(event) {
             this.map.removeLayer(this.markers[event]);
-            this.markers[event]=undefined;
+            this.markers[event] = undefined;
         },
         getLatLng(pos: L.LatLng): Number[] {
             return [pos.lat, pos.lng]
         },
         sendData(event) {
-            location.href= `/map/calc?start=${this.getLatLng(this.markers.start._latlng)}&end=${this.getLatLng(this.markers.end._latlng)}`;
+            if (this.validators.sTime) {
+                location.href = `/map/calc?start=${this.getLatLng(this.markers.start._latlng)}&end=${this.getLatLng(this.markers.end._latlng)}&sTime=${this.sTime}`;
+            } else {
+                this.enable_error = true;
+            }
+        },
+        validCheck(event) {
+            this.validators[event.name] = event.value;
         }
     },
     mounted: function () {
@@ -63,11 +91,12 @@ const leafletComponent = {
         this.map.invalidateSize();
         this.map.setView(DEFAULT_CENTER, 6);
         this.map.on('dblclick', event => {
-            const marker = L.marker(event.latlng);
-
+            let marker = null;
             if (!this.markers.start) {
+                marker = createMarker(event.latlng, "ld-start-marker");
                 this.markers.start = marker;
             } else {
+                marker = createMarker(event.latlng, "ld-end-marker");
                 if (this.markers.end) {
                     this.map.removeLayer(this.markers.end);
                 }

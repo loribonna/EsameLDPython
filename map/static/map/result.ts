@@ -12,7 +12,7 @@ const resultItemComponent = {
     },
     methods: {
         chooseTravel(event) {
-            console.log(event);
+            console.log(this.content);
         }
     }
 }
@@ -27,7 +27,8 @@ window.onload = function () {
         delimiters: ['[[', ']]'],
         el: '#app',
         components: {
-            'result-item': resultItemComponent
+            'result-item': resultItemComponent,
+            'ld-button': buttonComponent,
         },
         methods: {
             formatLatLng(pos: String) {
@@ -40,6 +41,9 @@ window.onload = function () {
                 } catch (e) {
                     return null;
                 }
+            },
+            returnMap(event){
+                location.href="/map"
             }
         }
     })

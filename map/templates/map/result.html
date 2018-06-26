@@ -13,8 +13,15 @@
 {%block content%}
 
 <div id="app" class="ld-container list-group">
-    <div class="badge badge-light">
-        Tariffe da: [[this.formatLatLng(this.$route.query.start)]] a [[this.formatLatLng(this.$route.query.start)]]:
+    <div style="display: flex; flex-direction: row">
+        <div>
+            <ld-button v-on:submit="returnMap">
+                <span class="fa fa-arrow-left"></span> Return to MAP</ld-button>
+        </div>
+        <div style="flex:1" class="badge badge-light">
+            Tariffe da: [[this.formatLatLng(this.$route.query.start)]] a [[this.formatLatLng(this.$route.query.start)]]
+            <br/> Partenza alle: [[this.$route.query.sTime]]
+        </div>
     </div>
     {% for result in results %}
         <result-item :content="{{result}}"></result-item>
