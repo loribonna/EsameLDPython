@@ -4,14 +4,15 @@ const travelDriverListItemComponent = {
         <span style="flex: 1;">Posizione di partenza:<br/>{{getPositionFormatted(content.startPos)}}</span>
         <span style="flex: 1;">Posizione di arrivo:<br/>{{getPositionFormatted(content.endPos)}}</span>
         <span style="flex: 1;">Data/Ora inizio:<br/>{{formatDate(content.startDateTime)}}</span>
-        <span v-if="checkPending()" class="badge badge-info ld-badge">In Corso</span>
+        <ld-badge v-if="checkPending()" color="info">In Corso</ld-badge>
     </div>`,
     props: [
         'content'
     ],
     mounted: function () { },
     components: {
-        'ld-button': buttonComponent
+        'ld-button': buttonComponent,
+        'ld-badge': badgeComponent
     },
     methods: {
         formatDate(d) {

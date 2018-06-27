@@ -2,15 +2,17 @@
 const positionLabelComponent = {
     template: `
         <div style="padding: 5px; display:flex">
-            <button v-on:click="removeData" :class=getClass()>X</button><div style="width:100%" class="badge badge-light">
-            <slot></slot>{{getLatLngFormatted()}}
-            </div>
+            <button v-on:click="removeData" :class=getClass()>X</button>
+            <ld-badge><slot></slot>{{getLatLngFormatted()}}</ld-badge>
         </div>`,
     props: [
         'markerPos',
         'markerName',
         'btnType'
     ],
+    components: {
+        'ld-badge': badgeComponent
+    },
     methods: {
         getLatLngFormatted() {
             return this.markerPos.lat.toFixed(2) + ", " + this.markerPos.lng.toFixed(2);
@@ -39,7 +41,7 @@ const leafletComponent = {
     template: `<div id="map" class="ld-map">
     <div style="position:absolute; z-index:500; right:0px">
         <div style="padding: 5px">
-            <span class="badge badge-light">Ora partenza: </span>
+            <ld-badge>Ora partenza: </ld-badge>
             <text-input style="width:120px" :enable_error="enable_error" name="sTime" validator="timeValidator" v-on:valid="validCheck" v-model="sTime"></text-input>
         </div>
         <position-label :markerPos="markers.start._latlng" :markerName="'start'" v-if="markers.start" v-on:delete="removeMarker">Inizio:<br/></position-label>
@@ -50,7 +52,8 @@ const leafletComponent = {
     components: {
         'position-label': positionLabelComponent,
         'ld-button': buttonComponent,
-        'text-input': textInputComponent
+        'text-input': textInputComponent,
+        'ld-badge': badgeComponent
     },
     data: function () {
         return {

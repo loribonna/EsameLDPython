@@ -8,7 +8,8 @@ const resultItemComponent = {
     </a>`,
     props: ['content'],
     components: {
-        'ld-button': buttonComponent
+        'ld-button': buttonComponent,
+        'ld-badge': badgeComponent
     },
     methods: {
         chooseTravel(event) {
