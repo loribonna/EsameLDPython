@@ -25,6 +25,9 @@ window.onload = function () {
                 }
                 event.preventDefault();
             },
+            submitForm(event){
+                this.$emit('submit', event);
+            },
             validCheck: function (event) {
                 this.components[event.name] = event.value
             }

@@ -12,6 +12,7 @@ const resultItemComponent = {
     },
     methods: {
         chooseTravel(event) {
+            //TODO:
             console.log(this.content);
         }
     }

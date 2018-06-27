@@ -16,7 +16,7 @@ ADD templates /app/templates
 ADD static /app/static
 
 # Adding apps
-ADD login /app/login
+ADD authentication /app/authentication
 ADD map /app/map
 ADD drivers /app/drivers
 ADD clients /app/clients

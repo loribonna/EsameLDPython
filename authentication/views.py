@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 
 def loginForm(request):
@@ -21,3 +21,7 @@ def loginForm(request):
             return render(request, 'login/login.html')
     else:
         return render(request, 'login/login.html')
+
+def logoutPage(request):
+    logout(request)
+    return redirect('/auth/login')

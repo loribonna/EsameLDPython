@@ -42,10 +42,10 @@ INSTALLED_APPS = [
     'clients.apps.ClientsConfig',
     'travels.apps.TravelsConfig',
     'drivers.apps.DriversConfig',
-    'login.apps.LoginConfig'
+    'authentication.apps.AuthConfig'
 ]
 
-LOGIN_URL = "/login/"
+LOGIN_URL = "/auth/login/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

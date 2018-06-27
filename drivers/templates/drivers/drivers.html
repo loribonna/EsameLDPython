@@ -10,12 +10,8 @@
 {%block content%}
 
 <div id="app">
-    <p> [[ title ]] </p>
-    <ul>
-        <li v-for="day in {{days}}">
-            <h4> Day [[day]] </h4>
-        </li>
-    </ul>
+    <driver-header action="/drivers/profile" tooltip="View Profile"></driver-header>
+    <travel-list :content="{{travels}}"></travel-list>
 </div>
 
-Items Base {%endblock%}
+{%endblock%}

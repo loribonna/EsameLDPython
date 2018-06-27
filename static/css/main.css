@@ -6,6 +6,12 @@
     width: 20%;
 }
 
+.ld-badge {
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+}
+
 .ld-tooltip::after {
     position: absolute;
     z-index: 2;
@@ -27,4 +33,9 @@
     opacity: 0.965;
     transition: opacity 0.1s linear 1.25s;
     content: attr(tooltip);
+}
+
+.ld-header {
+   display: flex;
+   margin: 5px;
 }

@@ -1,0 +1,34 @@
+{%extends 'base.html'%}
+
+{% block extra_head_content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" media="screen" href="{% static 'drivers/profile.css' %}" />
+{% load static %}
+<script src='{% static "drivers/profile.js" %}'></script>
+{%endblock%}
+
+{%block content%}
+
+<div id="app" userData="{{userData}}">
+    <driver-header action="/drivers" main_icon="arrow-left" tooltip="Return to Travels"></driver-header>
+    <form method="POST" @submit="handleSave">
+        {% csrf_token %}
+        <div class="ld-driver-profile-row">
+            <text-input class="ld-driver-profile-cell" name="name" placeholder="Nome" v-model="profile.user" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+            <text-input class="ld-driver-profile-cell" name="info" placeholder="Info" v-model="profile.info" v-on:valid="validCheck" :enable_error="enable_error"></text-input>
+        </div>
+        <div class="ld-driver-profile-row">
+            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="ratePerKM" placeholder="Tariffa al KM (€)" v-model="profile.ratePerKM" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>        
+            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="commonStartPos.lat" placeholder="Latitudine comune" v-model="profile.commonStartPos.lat" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="commonStartPos.lng" placeholder="Longitudine comune" v-model="profile.commonStartPos.lng" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+        </div>
+        <div class="ld-driver-profile-row">
+            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="maxDistance" placeholder="Distanza massima" v-model="profile.maxDistance" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+            <text-input validator="timeValidator" class="ld-driver-profile-cell" name="timeAvail.startTime" placeholder="Ora inizio disponibilità" v-model="profile.timeAvail.startTime" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="timeAvail.duration" placeholder="Durata disponibilità" v-model="profile.timeAvail.duration" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+        </div>
+        <ld-button tooltip="Salva le modifiche" style="margin-left: 5px" v-on:click="$emit('submit',$event)">Salva</ld-button>
+    </form>
+</div>
+
+{%endblock%}

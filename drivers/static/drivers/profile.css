@@ -1,0 +1,10 @@
+.ld-driver-profile-row {
+    display: flex;
+    flex-direction: row;
+    margin: 5px
+}
+
+.ld-driver-profile-cell {
+    margin-right: 3px;
+    flex:1;
+}

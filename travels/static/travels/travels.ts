@@ -1,7 +1,15 @@
 interface ITravel {
     travel_id,
+    startPos: IPos,
+    endPos: IPos,
     client,
     driver,
     fee,
-    datetime
+    startDateTime,
+    endDateTime
+}
+
+interface IPos {
+    lat,
+    lng
 }
