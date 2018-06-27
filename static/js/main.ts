@@ -1,3 +1,7 @@
+const capitalizeString = (s: String) => {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 const buttonComponent = {
     template: '<button :tooltip="tooltip" v-bind:type="type" v-on:click="$emit(\'click\', $event)" :class="getClass()"><slot></slot></button>',
     props: [
@@ -15,6 +19,18 @@ const buttonComponent = {
         }
     }
 };
+
+const badgeComponent = {
+    template: `<span :class="getClass()"><slot></slot></span>`,
+    props:['color'],
+    methods: {
+        getClass() {
+            return 'badge badge-' + 
+            (this.color ? this.color : 'light') + 
+            ' ld-badge';
+        }
+    }
+}
 
 const formatNum = (n) => {
     return n && typeof n === 'number' ? n : '';
@@ -87,7 +103,7 @@ const textInputComponent = {
 
 const headerComponent = {
     template: `<div class="ld-header">
-        <ld-button :tooltip=tooltip v-on:click="homeClick"><span :class="getIcon()"></span></ld-button>
+        <ld-button v-if="action!=null" :tooltip=tooltip v-on:click="homeClick"><span :class="getIcon()"></span></ld-button>
         <ld-button style="margin-right:0; margin-left:auto" v-on:click="logout">Logout <span class="fa fa-sign-out"></span></ld-button>
     </div>`,
     props: ['action', 'tooltip', 'main_icon'],

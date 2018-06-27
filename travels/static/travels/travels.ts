@@ -1,12 +1,13 @@
 interface ITravel {
-    travel_id,
+    travel_id: String,
     startPos: IPos,
     endPos: IPos,
-    client,
-    driver,
-    fee,
-    startDateTime,
-    endDateTime
+    client: IClient,
+    driver: IDriver,
+    fee: Number,
+    startDateTime: Date,
+    endDateTime: Date,
+    refoundRequest: Number
 }
 
 interface IPos {

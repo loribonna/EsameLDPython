@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'clients.apps.ClientsConfig',
     'travels.apps.TravelsConfig',
     'drivers.apps.DriversConfig',
-    'authentication.apps.AuthConfig'
+    'authentication.apps.AuthConfig',
+    'administrator.apps.AdministratorConfig'
 ]
 
 LOGIN_URL = "/auth/login/"

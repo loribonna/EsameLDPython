@@ -10,8 +10,10 @@
 {%block content%}
 
 <div id="app">
-    <client-header action="/map" tooltip="Return MAP"></client-header>
-    <travel-list :content="{{travels}}"></travel-list>
+    <ld-header action="/map" tooltip="Return MAP"></ld-header>
+    {% for travel in travels %}
+        <list-item :content="{{travel}}"></list-item>
+    {% endfor %}
 </div>
 
 {%endblock%}

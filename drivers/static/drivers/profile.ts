@@ -1,8 +1,5 @@
-interface IDriver {
-    id: String,
-    name: String,
+interface IDriver extends IUserBase {
     travels: ITravel,
-    info: String,
     ratePerKM: Number,
     commonStartPos: IPos,
     maxDistance: Number,
@@ -22,7 +19,7 @@ window.onload = function () {
         components: {
             'text-input': textInputComponent,
             'ld-button': buttonComponent,
-            'driver-header': headerComponent
+            'ld-header': headerComponent
         },
         data: function () {
             return {

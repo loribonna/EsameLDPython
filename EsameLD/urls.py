@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^drivers', include('drivers.urls')),
     url(r'^map', include('map.urls')),
     url(r'^auth', include('authentication.urls')),
+    url(r'^administrator', include('administrator.urls')),
     url(r'.*', include('pageNotFound.urls'))
 ]

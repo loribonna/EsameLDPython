@@ -1,13 +1,9 @@
-interface IClient extends IUserBase { }
-
-const travelClientListItemComponent = {
+const travelAdminListItemComponent = {
     template: `<div style="display: flex;" class="list-group-item list-group-item-action">
         <span style="flex: 1;">Posizione di partenza:<br/>{{getPositionFormatted(content.startPos)}}</span>
         <span style="flex: 1;">Posizione di arrivo:<br/>{{getPositionFormatted(content.endPos)}}</span>
         <span style="flex: 1;">Data/Ora inizio:<br/>{{formatDate(content.startDateTime)}}</span>
-        <span style="flex: 1;">Costo: {{content.cost}}</span>
-        <ld-button style="margin-right:5px" v-on:click="askRefund" btnType="warning">Richiedi rimborso <span class="fa fa-recycle"></span></ld-button>
-        <ld-button tooltip="Report Driver" style="margin-right:5px" v-on:click="reportDriver" btnType="warning"><span class="fa fa-frown-o"></span></ld-button>
+        <ld-button v-if="content.refoundRequest" style="margin-right:5px" v-on:click="acceptRefound" btnType="warning">Accetta rimborso <span class="fa fa-recycle"></span></ld-button>
         <ld-button v-on:click="removeTravel" v-if="checkRemovable()" btnType="danger">X</ld-button>
     </div>`,
     props: [
@@ -36,11 +32,7 @@ const travelClientListItemComponent = {
                 return ''
             }
         },
-        askRefund() {
-            //TODO: 
-            console.log(this);
-        },
-        reportDriver() {
+        acceptRefound() {
             //TODO: 
             console.log(this);
         },
@@ -48,7 +40,7 @@ const travelClientListItemComponent = {
             //TODO: 
             if (this.checkRemovable()) {
                 console.log(this);
-            }  
+            }
         }
     }
 }
@@ -57,9 +49,10 @@ window.onload = function () {
     new Vue({
         delimiters: ['[[', ']]'],
         el: '#app',
+        props: ['content'],
         components: {
-            'list-item': travelClientListItemComponent,
-            'ld-header': headerComponent
+            'ld-header': headerComponent,
+            'list-item': travelAdminListItemComponent
         }
     })
 }

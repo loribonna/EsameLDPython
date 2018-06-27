@@ -10,7 +10,7 @@
 {%block content%}
 
 <div id="app" userData="{{userData}}">
-    <driver-header action="/drivers" main_icon="arrow-left" tooltip="Return to Travels"></driver-header>
+    <ld-header action="/drivers" main_icon="arrow-left" tooltip="Return to Travels"></ld-header>
     <form method="POST" @submit="handleSave">
         {% csrf_token %}
         <div class="ld-driver-profile-row">

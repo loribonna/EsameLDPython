@@ -5,8 +5,10 @@ from datetime import datetime
 
 def travelsList(request):
     context = {'travels': [
-        {'start': 'a', 'end': 'b', 'cost': 12, 'dt': datetime.now().isoformat()},
-        {'start': 'a1', 'end': 'b1', 'cost': 32, 'dt': datetime.now().isoformat()}
-        ]}
+        {'startPos': {'lat': 42, 'lng': 12}, 'endPos': {'lat': 42, 'lng': 32},
+            'cost': 12, 'startDateTime': datetime.now().isoformat()},
+        {'startPos': {'lat': 42}, 'endPos': {'lat': 'a', 'lng': 32},
+            'cost': 32, 'startDateTime': datetime.now().isoformat()}
+    ]}
     return render(request, 'clients/clients.html', context=context)
     #return render(request, 'items/items.html', context=context)

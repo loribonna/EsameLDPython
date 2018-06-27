@@ -16,6 +16,7 @@ class Travel(models.Model):
     endDateTime=models.DateTimeField(auto_now_add=True, blank=True)
     startPos=models.ForeignKey(PosLatLng, on_delete=models.CASCADE, related_name='startPos')
     endPos=models.ForeignKey(PosLatLng, on_delete=models.CASCADE, related_name='endPos')
+    refound_request=models.PositiveSmallIntegerField()
 
     def __str__(self):
         return 'Client: '+self.client.__str__()+', Driver: '+self.driver.__str__()

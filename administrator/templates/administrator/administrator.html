@@ -1,0 +1,19 @@
+{%extends 'base.html'%}
+
+{% block extra_head_content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" media="screen" href="{% static "administrator/administrator.css" %}" />
+{% load static %}
+<script src="{% static "administrator/administrator.js" %}"></script>
+{%endblock%}
+
+{%block content%}
+
+<div id="app">
+    <ld-header action="/administrator/users" main_icon="users" tooltip="Manage Users"></ld-header>
+    {% for travel in travels %}
+        <list-item :content="{{travel}}"></list-item>
+    {% endfor %}
+</div>
+
+{%endblock%}

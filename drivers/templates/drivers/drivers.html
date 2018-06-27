@@ -10,8 +10,10 @@
 {%block content%}
 
 <div id="app">
-    <driver-header action="/drivers/profile" tooltip="View Profile"></driver-header>
-    <travel-list :content="{{travels}}"></travel-list>
+    <ld-header action="/drivers/profile" tooltip="View Profile"></ld-header>
+    {% for travel in travels %}
+        <list-item :content="{{travel}}"></list-item>
+    {% endfor %}
 </div>
 
 {%endblock%}
