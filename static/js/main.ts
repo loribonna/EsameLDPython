@@ -62,6 +62,23 @@ const VALIDATORS = {
 
 }
 
+const checkboxInputComponent = {
+    template: `<div class="form-check">
+        <input v-bind:value="value" type="checkbox" style="position: relative" class="form-check-input" :name="name" v-on:input="onInput" :id="name">
+        <label v-if="label" class="form-check-label" :for="name">{{label}}</label>
+    </div>`,
+    props: [
+        'name',
+        'label',
+        'value'
+    ],
+    methods: {
+        onInput(event) {
+            this.$emit('input', event.target.value);
+        }
+    }
+}
+
 const textInputComponent = {
     template: `<input class="form-control ld_text_input" :placeholder="placeholder" :name="name" :type="type ? type : \'text\'" v-bind:class="{invalid: (!valid&&enable_error)}" v-bind:value="value" v-on:input="onInput">`,
     props: [
@@ -119,6 +136,28 @@ const headerComponent = {
         },
         logout(){
             location.href="/auth/logout"
+        }
+    }
+}
+
+const dropdownComponent = {
+    template: `<div class="dropdown">
+        <div><ld-button v-on:click="openDropdown" btnType="secondary" class="dropdown-toggle">{{button_text || 'Apri'}}</ld-button></div>
+        <br>
+        <div class="ld-dropdown" v-if="toggle"><slot></slot></div>
+    </div>`,
+    props: ['button_text'],
+    components: {
+        'ld-button': buttonComponent
+    },
+    data: function() {
+        return {
+            toggle: null
+        }
+    },
+    methods: {
+        openDropdown(event) {
+            this.toggle = !this.toggle ? true : false
         }
     }
 }

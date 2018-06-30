@@ -39,3 +39,8 @@
    display: flex;
    margin: 5px;
 }
+
+.ld-dropdown {
+    border:1px solid rgba(0,0,0,.15);
+    border-radius:.25rem;
+}

@@ -11,14 +11,35 @@
 {%block content%}
 
 <div id="app">
+    {% if user_data %}
+    <div style="display: none">[[content={{user_data}}]]</div>
+    {% endif %}
+    {% if user_exists %}
+    <ld-badge>UserExists</ld-badge>
+    {%endif%}
     <form method="POST" @submit="handleLogin" class="ld_form">
         {% csrf_token %}
+        <ld-badge>Login</ld-badge>
         <div class="ld_form_row">
             <text-input style="flex:1" name="username" placeholder="username" v-model="user"  v-on:valid="validCheck" :enable_error="enable_error" required></text-input>
-            <text-input style="flex:1" name="password" placeholder="password" v-model="pass" v-on:valid="validCheck" :enable_error="enable_error"></text-input>
+            <text-input style="flex:1" name="password" placeholder="password" type="password" v-model="pass" v-on:valid="validCheck" :enable_error="enable_error"></text-input>
         </div>
-        <ld-button v-on:click="submitForm" >Login</ld-button>
+        <ld-button v-on:click="submitForm" >Sign In</ld-button>        
     </form>
+    <br><br><br><br><br>
+    <ld-dropdown button_text="Registrazione" class="ld_form">
+        <form method="POST" @submit="handleLogin" action='/auth/signup'>
+            {% csrf_token %}
+            <div class="ld_form_row">
+                <text-input style="flex:1" name="username" placeholder="username" v-model="user"  v-on:valid="validCheck" :enable_error="enable_error" required></text-input>
+                <text-input style="flex:1" name="password" placeholder="password" type="password" v-model="pass" v-on:valid="validCheck" :enable_error="enable_error"></text-input>
+            </div>
+            <div class="ld_form_row">
+                <check-input label="Autista" name="driver_enable" v-model="driver_enable"></check-input>
+            </div>
+            <ld-button v-on:click="submitForm" >Sign Up</ld-button>
+        </form>
+    </ld-dropdown>
 </div>
 
 {%endblock%}

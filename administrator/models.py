@@ -1,10 +1,11 @@
-from django.db import models
+from authentication.models import UserBase
+from django.contrib.auth.models import Permission
+from django.contrib import admin
 
-# Create your models here.
-class UserBase(models.Model):
-    name=models.CharField(max_length=50)
-    info=models.CharField(max_length=200)
-    reportes=models.PositiveSmallIntegerField()
-    black_listed=models.BooleanField()
-    def __str__(self):
-        return self.name.__str__()
+class AdminUser(UserBase):
+    class Meta:
+        permissions=(('admin','ADMIN'),)
+
+class PermissionAdmin(admin.ModelAdmin):
+    model = Permission
+    fields = ['name']

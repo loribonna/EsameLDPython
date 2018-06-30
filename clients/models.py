@@ -1,6 +1,8 @@
 from django.db import models
-from administrator.models import UserBase
-# Create your models here.
+from authentication.models import UserBase
+
+
 class Client(UserBase):
-    def __str__(self):
-        return self.__str__()
+    class Meta:
+        permissions = (('client', 'CLIENT'),)
+

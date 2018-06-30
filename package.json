@@ -7,7 +7,8 @@
     "start": "python manage.py runserver 0.0.0.0:8000",
     "build": "tsc --p ./tsconfig.json",
     "build:watch": "tsc --p ./tsconfig.json -w",
-    "resolve_migrations": "python manage.py makemigrations & python manage.py migrate"
+    "resolve_migrations": "python manage.py makemigrations & python manage.py migrate",
+    "sync_db": "python manage.py makemigrations & python manage.py migrate"
   },
   "repository": {
     "type": "git",

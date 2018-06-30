@@ -1,11 +1,3 @@
-interface IUserBase {
-    name: String,
-    info: String,
-    reportes: Number,
-    black_listed: Boolean,
-    user_type: String
-}
-
 const usersListItemComponent = {
     template: `<div style="display: flex;" class="list-group-item list-group-item-action">
         <div style="display:flex; flex:1"><ld-badge color="info">{{getUserTypeFormatted()}}</ld-badge></div>

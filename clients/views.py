@@ -11,4 +11,3 @@ def travelsList(request):
             'cost': 32, 'startDateTime': datetime.now().isoformat()}
     ]}
     return render(request, 'clients/clients.html', context=context)
-    #return render(request, 'items/items.html', context=context)
