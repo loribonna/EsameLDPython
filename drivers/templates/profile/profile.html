@@ -13,6 +13,7 @@
 
 <div id="app" userData="{{userData}}">
     <ld-header v-if="db_consistent" action="/drivers" main_icon="arrow-left" tooltip="Return to Travels"></ld-header>
+    <ld-badge style="margin-left:3px; margin-right:3px; width:99%; display: block; border: 1px solid #ced4da; border-radius: .25rem">Dati del Profilo</ld-badge>
     <form method="POST" @submit="handleSave">
         {% csrf_token %}
         <div class="ld-driver-profile-row">
