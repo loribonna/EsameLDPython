@@ -48,10 +48,10 @@ def loginForm(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                if user.is_superuser:
+                    return redirect('/administrator')
                 if user.has_perm('drivers.driver'):
-                    return redirect('/drivers')
-                if user.has_perm('administrator.admin'):
-                    return redirect('/admin')
+                    return redirect('/drivers/profile')
                 if user.has_perm('clients.client'):
                     return redirect('/clients')
             else:

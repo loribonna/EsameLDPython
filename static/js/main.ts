@@ -20,6 +20,29 @@ const buttonComponent = {
     }
 };
 
+const DEFAULT_CENTER = [41.8931, 12.4828];
+
+const leafletComponent = {
+    template: `<div id="map" class="ld-map"><slot></slot></div>`,
+    data: function () {
+        return {
+            map: null
+        };
+    },
+    mounted: function () {
+        this.map = new L.Map('map');
+        L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+        }).addTo(this.map);
+        this.map.invalidateSize();
+        this.map.setView(DEFAULT_CENTER, 6);
+
+        this.map.on('dblclick', event => {
+            this.$emit('dblclick', event);
+        });
+    }
+};
+
 const badgeComponent = {
     template: `<span :class="getClass()"><slot></slot></span>`,
     props:['color'],
@@ -28,6 +51,36 @@ const badgeComponent = {
             return 'badge badge-' + 
             (this.color ? this.color : 'light') + 
             ' ld-badge';
+        }
+    }
+}
+
+const positionLabelComponent = {
+    template: `
+        <div style="padding: 5px; display:flex">
+            <button v-on:click="removeData" :class=getClass()>X</button>
+            <ld-badge><slot></slot>{{getLatLngFormatted()}}</ld-badge>
+        </div>`,
+    props: [
+        'marker_pos',
+        'marker_name',
+        'btn_type'
+    ],
+    data: function() { return {}},
+    components: {
+        'ld-badge': badgeComponent
+    },
+    methods: {
+        getLatLngFormatted() {
+            if(this.marker_pos && this.marker_pos.lat && this.marker_pos.lng) {
+                return this.marker_pos.lat.toFixed(2) + ", " + this.marker_pos.lng.toFixed(2);
+            }
+        },
+        removeData() {
+            this.$emit('delete', this.marker_name);
+        },
+        getClass() {
+            return `btn btn-${this.btn_type || 'primary'}`
         }
     }
 }

@@ -10,7 +10,7 @@
 {%block content%}
 
 <div id="app">
-    <ld-header action="/map" tooltip="Return MAP"></ld-header>
+    <ld-header action="/map" main_icon="map" tooltip="Return MAP"></ld-header>
     {% for travel in travels %}
         <list-item :content="{{travel}}"></list-item>
     {% endfor %}
