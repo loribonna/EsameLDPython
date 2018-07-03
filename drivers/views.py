@@ -22,4 +22,4 @@ def driverProfile(request):
         'maxDistance': 3332,
         'timeAvail': {'startTime': '9:30', 'duration': 12}
     }}
-    return render(request, 'drivers/profile.html', context=context)
+    return render(request, 'profile/profile.html', context=context)

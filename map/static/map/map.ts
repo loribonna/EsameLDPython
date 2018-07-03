@@ -32,6 +32,7 @@ const createMarker = (pos: L.LatLng, className: String) => {
     const icon = L.divIcon({
         className: '',
         iconSize: null,
+        iconAnchor: <any>['8', '30'],
         html: "<div class='fa fa-map-marker " + className + "'></div>"
     });
     return L.marker(pos, { icon: icon });
@@ -115,7 +116,8 @@ window.onload = function () {
         delimiters: ['[[', ']]'],
         el: '#app',
         components: {
-            'leaflet': leafletComponent
+            'leaflet': leafletComponent,
+            'ld-header': headerComponent
         }
     })
 }

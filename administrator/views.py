@@ -16,4 +16,4 @@ def adminUsersPage(request):
     context = {'users': [
         {'name': 'a1', 'id': 'asgkbjd'}
         ]}
-    return render(request, 'administrator/usersManage.html', context=context)
+    return render(request, 'usersManage/usersManage.html', context=context)

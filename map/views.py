@@ -6,7 +6,7 @@ def map(request):
     return render(request, 'map/map.html')
 
 def result(request):
-    return render(request, 'map/result.html', context={
+    return render(request, 'result/result.html', context={
         'results':[
             {'name': 'a', 'cost': 22},
             {'name': 'b', 'message': 'roba', 'cost': 15},
