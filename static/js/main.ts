@@ -121,9 +121,9 @@ const textInputComponent = {
 const headerComponent = {
     template: `<div class="ld-header">
         <ld-button v-if="action!=null" :tooltip=tooltip v-on:click="homeClick"><span :class="getIcon()"></span></ld-button>
-        <ld-button style="margin-right:0; margin-left:auto" v-on:click="logout">Logout <span class="fa fa-sign-out"></span></ld-button>
+        <ld-button v-if="!disable_logout" style="margin-right:0; margin-left:auto" v-on:click="logout">Logout <span class="fa fa-sign-out"></span></ld-button>
     </div>`,
-    props: ['action', 'tooltip', 'main_icon'],
+    props: ['action', 'tooltip', 'main_icon', 'disable_logout'],
     components: {
         'ld-button': buttonComponent
     },

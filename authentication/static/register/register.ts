@@ -1,12 +1,3 @@
-interface IUserBase {
-    name: String,
-    info: String,
-    enable_driver: Boolean,
-    reportes: Number,
-    black_listed: Boolean,
-    user_type: String
-}
-
 window.onload = function () {
     new Vue({
         delimiters: ['[[', ']]'],
@@ -14,6 +5,7 @@ window.onload = function () {
         components: {
             'ld-button': buttonComponent,
             'text-input': textInputComponent,
+            'check-input': checkboxInputComponent,
             'ld-badge': badgeComponent
         },
         data: {
@@ -21,10 +13,11 @@ window.onload = function () {
             pass: null,
             enable_error: false,
             components: {},
-            content: null
+            content: null,
+            driver_enable: null
         },
         methods: {
-            handleLogin: function (event) {
+            handleSubmit: function (event) {
                 for (const comp in this.components) {
                     if (!this.components[comp]) {
                         event.preventDefault();

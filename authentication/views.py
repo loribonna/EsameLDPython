@@ -10,14 +10,14 @@ def registerForm(request):
     if 'username' in request.POST and 'password' in request.POST:
         username = request.POST['username']
         password = request.POST['password']
-
+        
         driver_enable = None
         if 'driver_enable' in request.POST:
             driver_enable = request.POST['driver_enable']
 
         if driver_enable != None:
             if Driver.objects.filter(username=username).exists():
-                return render(request, 'login/login.html', context={'user_exists': True})
+                return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
             user = Driver.objects.create_user(
                 username=username, password=password
             )
@@ -27,7 +27,7 @@ def registerForm(request):
             return redirect('/drivers')
         else:
             if Client.objects.filter(username=username).exists():
-                return render(request, 'login/login.html', context={'user_exists': True})
+                return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
             user = Client.objects.create_user(
                 username=username, password=password
             )
@@ -37,7 +37,7 @@ def registerForm(request):
             return redirect('/clients')
 
     else:
-        return render(request, 'login/login.html')
+        return render(request, 'register/register.html', context={'user_data': {'user': username, 'pass': password}})
 
 
 def loginForm(request):
@@ -55,18 +55,9 @@ def loginForm(request):
                 if user.has_perm('clients.client'):
                     return redirect('/clients')
             else:
-                context = {
-                    'inactive': True
-                }
-                return render(request, 'login/login.html', context=context)
+                return render(request, 'login/login.html', context={'inactive': True})
         else:
-            c = {
-                'user_data': {
-                    'user': username,
-                    'pass': password
-                }
-            }
-            return render(request, 'login/login.html', context=c)
+            return render(request, 'login/login.html', context={'user_data': {'user': username,'pass': password}})
     return render(request, 'login/login.html')
 
 

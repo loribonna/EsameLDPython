@@ -1,34 +1,36 @@
 {%extends 'base.html'%}
 
 {% block extra_head_content %}
-<title>Login</title>
+<title>SignUp</title>
 {% load static %}
-<link rel="stylesheet" type="text/css" media="screen" href="{% static "login/login.css" %}" />
+<link rel="stylesheet" type="text/css" media="screen" href="{% static "register/register.css" %}" />
 {% load static %}
-<script src="{% static "login/login.js" %}"></script>
+<script src="{% static "register/register.js" %}"></script>
 {%endblock%}
 
 {%block content%}
 
 <div id="app">
-    <a href="/auth/signup" style="margin-left:auto; margin-right:0;display: table" class="btn btn-info">Registrati</a>
+    <a href="/auth/login" style="margin-left:auto; margin-right:0;display: table" class="btn btn-info">Login</a>
 
     {% if user_data %}
     <div style="display: none">[[content={{user_data}}]]</div>
     {% endif %}
-    {% if inactive %}
-    <ld-badge style="background-color: red; color: white; display: block">Utente Inattivo</ld-badge>
+
+    {% if user_exists %}
+    <ld-badge style="background-color: red; color: white; display: block">Utente Già Esistente</ld-badge>
     {%endif%}
     <div class="ld_form">
-        <ld-badge>Login</ld-badge>
-        <form method="POST" @submit="handleLogin">
+        <form method="POST" @submit="handleSubmit" action='/auth/signup'>
             {% csrf_token %}
-            
             <div class="ld_form_row">
                 <text-input style="flex:1" name="username" placeholder="username" v-model="user"  v-on:valid="validCheck" :enable_error="enable_error" required></text-input>
                 <text-input style="flex:1" name="password" placeholder="password" type="password" v-model="pass" v-on:valid="validCheck" :enable_error="enable_error"></text-input>
             </div>
-            <ld-button v-on:click="submitForm">Sign In</ld-button>        
+            <div class="ld_form_row">
+                <check-input label="Autista" name="driver_enable" v-model="driver_enable"></check-input>
+            </div>
+            <ld-button v-on:click="submitForm">Sign Up</ld-button>
         </form>
     </div>
     
