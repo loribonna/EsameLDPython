@@ -1,6 +1,8 @@
 {%extends 'base.html'%}
 
 {% block extra_head_content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 {% load static %}
 <link rel="stylesheet" type="text/css" media="screen" href="{% static 'profile/profile.css' %}" />
 {% load static %}
@@ -29,7 +31,10 @@
         </div>
         <ld-button tooltip="Salva le modifiche" style="margin-left: 5px" v-on:click="$emit('submit',$event)">Salva</ld-button>
     </form>
-    
+    <ld-divider></ld-divider>
+    <div style="width: 100%;height:256px;position:absolute;z-index:1">
+        <ld-leaflet v-on:dblclick="selectPosition" style="position: relative; height: 100%; width:100%"></ld-leaflet>
+    </div>
 </div>
 
 {%endblock%}

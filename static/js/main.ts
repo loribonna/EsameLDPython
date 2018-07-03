@@ -2,6 +2,48 @@ const capitalizeString = (s: String) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+const formatNum = (n) => {
+    return n && typeof n === 'number' ? n : 0;
+}
+
+const formatDate = (d: Date) => {
+    return d.toLocaleString();
+}
+
+const isValidDate = (d) => {
+    return d && d instanceof Date && !isNaN(d.getTime());
+}
+
+const checkDateDifference = (d1, d2, maxDiff) => {
+    return (d2 - d1) <= maxDiff;
+}
+
+const MAX_DATE_DIFF = 15 * 60 * 1000; // 15 minutes
+
+const VALIDATORS = {
+    timeValidator: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/,
+    stringValidator: <RegExp>/^([A-Za-z0-99À-ÿ� ,.:/';+!?|)(_\n-]*)*$/,
+    telephoneValidator: <RegExp>/^([+]([0-9][0-9][\s])?)?([0-9]*(\s)?[0-9]*)$/,
+    mailValidator: <RegExp>/(^$|^.*@.*\..*$)/,
+    numberValidator: <RegExp>/^(-)?[0-9]*([.][0-9]*)?$/,
+    urlValidator: <RegExp>/(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/,
+    dateWithoutYearValidator: <RegExp>/^[0-9]{1,2}(-|\/)?[0-9]{1,2}$/,
+    objectID: <RegExp>/^[0-9a-fA-F]{24}$/
+}
+
+const DEFAULT_CENTER = [41.8931, 12.4828];
+
+const createMarker = (pos: L.LatLng, className?: String) => {
+    const icon = L.divIcon({
+        className: '',
+        iconSize: null,
+        iconAnchor: <any>['8', '30'],
+        html: "<div class='fa fa-map-marker ld-marker " + className + "'></div>"
+    });
+    return L.marker(pos, { icon: icon });
+}
+
+
 const buttonComponent = {
     template: '<button :tooltip="tooltip" v-bind:type="type" v-on:click="$emit(\'click\', $event)" :class="getClass()"><slot></slot></button>',
     props: [
@@ -20,8 +62,6 @@ const buttonComponent = {
     }
 };
 
-const DEFAULT_CENTER = [41.8931, 12.4828];
-
 const leafletComponent = {
     template: `<div id="map" class="ld-map"><slot></slot></div>`,
     data: function () {
@@ -36,7 +76,7 @@ const leafletComponent = {
         }).addTo(this.map);
         this.map.invalidateSize();
         this.map.setView(DEFAULT_CENTER, 6);
-
+        this.map.off('dblclick');
         this.map.on('dblclick', event => {
             this.$emit('dblclick', event);
         });
@@ -53,6 +93,10 @@ const badgeComponent = {
             ' ld-badge';
         }
     }
+}
+
+const dividerComponent = {
+    template: `<div class="ld-divider"></div>`
 }
 
 const positionLabelComponent = {
@@ -83,36 +127,6 @@ const positionLabelComponent = {
             return `btn btn-${this.btn_type || 'primary'}`
         }
     }
-}
-
-const formatNum = (n) => {
-    return n && typeof n === 'number' ? n : '';
-}
-
-const formatDate = (d: Date) => {
-    return d.toLocaleString();
-}
-
-const isValidDate = (d) => {
-    return d && d instanceof Date && !isNaN(d.getTime());
-}
-
-const checkDateDifference = (d1, d2, maxDiff) => {
-    return (d2 - d1) <= maxDiff;
-}
-
-const MAX_DATE_DIFF = 15 * 60 * 1000; // 15 minutes
-
-const VALIDATORS = {
-    timeValidator: /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/,
-    stringValidator: <RegExp>/^([A-Za-z0-99À-ÿ� ,.:/';+!?|)(_\n-]*)*$/,
-    telephoneValidator: <RegExp>/^([+]([0-9][0-9][\s])?)?([0-9]*(\s)?[0-9]*)$/,
-    mailValidator: <RegExp>/(^$|^.*@.*\..*$)/,
-    numberValidator: <RegExp>/^(-)?[0-9]*([.][0-9]*)?$/,
-    urlValidator: <RegExp>/(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/,
-    dateWithoutYearValidator: <RegExp>/^[0-9]{1,2}(-|\/)?[0-9]{1,2}$/,
-    objectID: <RegExp>/^[0-9a-fA-F]{24}$/
-
 }
 
 const checkboxInputComponent = {

@@ -15,11 +15,9 @@ html, body {
 
 .ld-start-marker {
     color: blue;
-    font-size: 30px;
 }
 
 .ld-end-marker {
-    font-size: 30px;
     color: red;
 }
 

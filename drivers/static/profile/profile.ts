@@ -19,7 +19,10 @@ window.onload = function () {
         components: {
             'text-input': textInputComponent,
             'ld-button': buttonComponent,
-            'ld-header': headerComponent
+            'ld-header': headerComponent,
+            'ld-leaflet': leafletComponent,
+            'ld-divider': dividerComponent,
+            'ld-badge': badgeComponent
         },
         data: function () {
             return {
@@ -38,6 +41,8 @@ window.onload = function () {
                         duration: null
                     }
                 },
+                marker: null,
+                map: null,
                 checkers: {}
             }
         },
@@ -47,14 +52,35 @@ window.onload = function () {
                     event.preventDefault();
                     this.enable_error = true;
                 }
-                console.log(this.profile, this.checkers);
                 event.preventDefault();
             },
             validCheck(event) {
                 this.checkers[event.name] = event.value;
+            },
+            selectPosition(event) {
+                if (event.latlng) {
+                    this.profile.commonStartPos.lat = event.latlng.lat;
+                    this.profile.commonStartPos.lng = event.latlng.lng;
+                    this.addMarker(event.latlng);
+                }
+            },
+            addMarker(latlng) {
+                let marker = null;
+                if (this.marker) {
+                    this.removeMarker();
+                }
+                marker = createMarker(latlng);
+                this.marker = marker;
+                marker.addTo(this.map);
+                
+            },
+            removeMarker() {
+                this.map.removeLayer(this.marker);
+                this.marker = undefined;
             }
         },
         mounted: function () {
+            this.map = (<any[]>this.$children).find(c => c['map'] != null && typeof c['map'] !== "function").map;
             if (this.userData) {
                 this.profile = this.userData;
             }
