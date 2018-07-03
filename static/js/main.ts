@@ -54,10 +54,10 @@ const buttonComponent = {
     ],
     methods: {
         getClass() {
-            return 'btn btn-' + 
-            (this.btnType ? this.btnType : 'primary') +
-            (this.tooltip ? ' ld-tooltip' : '') + 
-            (this.disable ? 'disabled' : '');
+            return 'btn btn-' +
+                (this.btnType ? this.btnType : 'primary') +
+                (this.tooltip ? ' ld-tooltip' : '') +
+                (this.disable ? 'disabled' : '');
         }
     }
 };
@@ -85,12 +85,12 @@ const leafletComponent = {
 
 const badgeComponent = {
     template: `<span :class="getClass()"><slot></slot></span>`,
-    props:['color'],
+    props: ['color'],
     methods: {
         getClass() {
-            return 'badge badge-' + 
-            (this.color ? this.color : 'light') + 
-            ' ld-badge';
+            return 'badge badge-' +
+                (this.color ? this.color : 'light') +
+                ' ld-badge';
         }
     }
 }
@@ -110,13 +110,13 @@ const positionLabelComponent = {
         'marker_name',
         'btn_type'
     ],
-    data: function() { return {}},
+    data: function () { return {} },
     components: {
         'ld-badge': badgeComponent
     },
     methods: {
         getLatLngFormatted() {
-            if(this.marker_pos && this.marker_pos.lat && this.marker_pos.lng) {
+            if (this.marker_pos && this.marker_pos.lat && this.marker_pos.lng) {
                 return this.marker_pos.lat.toFixed(2) + ", " + this.marker_pos.lng.toFixed(2);
             }
         },
@@ -157,6 +157,11 @@ const textInputComponent = {
         'validator',
         'required'
     ],
+    watch: {
+        value: function (newVal, oldVal) {
+            this.onInput({ target: { value: newVal } });
+        }
+    },
     data: function () {
         return {
             valid: null,
@@ -198,11 +203,11 @@ const headerComponent = {
         homeClick(event) {
             if (this.action) { location.href = this.action }
         },
-        getIcon(){
+        getIcon() {
             return 'fa fa-' + (this.main_icon ? this.main_icon : 'home');
         },
-        logout(){
-            location.href="/auth/logout"
+        logout() {
+            location.href = "/auth/logout"
         }
     }
 }
@@ -217,7 +222,7 @@ const dropdownComponent = {
     components: {
         'ld-button': buttonComponent
     },
-    data: function() {
+    data: function () {
         return {
             toggle: null
         }

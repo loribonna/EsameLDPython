@@ -12,7 +12,7 @@
 {%block content%}
 
 <div id="app" userData="{{userData}}">
-    <ld-header action="/drivers" main_icon="arrow-left" tooltip="Return to Travels"></ld-header>
+    <ld-header v-if="db_consistent" action="/drivers" main_icon="arrow-left" tooltip="Return to Travels"></ld-header>
     <form method="POST" @submit="handleSave">
         {% csrf_token %}
         <div class="ld-driver-profile-row">

@@ -26,6 +26,7 @@ window.onload = function () {
         },
         data: function () {
             return {
+                db_consistent: false,
                 enable_error: false,
                 profile: {
                     user: null,
@@ -65,14 +66,15 @@ window.onload = function () {
                 }
             },
             addMarker(latlng) {
-                let marker = null;
-                if (this.marker) {
-                    this.removeMarker();
+                if (this.profile.commonStartPos.lat && this.profile.commonStartPos.lng) {
+                    let marker = null;
+                    if (this.marker) {
+                        this.removeMarker();
+                    }
+                    marker = createMarker(latlng);
+                    this.marker = marker;
+                    marker.addTo(this.map);
                 }
-                marker = createMarker(latlng);
-                this.marker = marker;
-                marker.addTo(this.map);
-                
             },
             removeMarker() {
                 this.map.removeLayer(this.marker);
@@ -82,7 +84,11 @@ window.onload = function () {
         mounted: function () {
             this.map = (<any[]>this.$children).find(c => c['map'] != null && typeof c['map'] !== "function").map;
             if (this.userData) {
+                this.db_consistent = true;
                 this.profile = this.userData;
+                if (this.profile.commonStartPos) {
+                    this.addMarker(this.profile.commonStartPos);
+                }
             }
         }
     })
