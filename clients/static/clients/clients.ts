@@ -1,6 +1,7 @@
 interface IClient extends IUserBase { }
 
 const travelClientListItemComponent = {
+    //TODO;
     template: `<div style="display: flex;" class="list-group-item list-group-item-action">
         <span style="flex: 1;">Posizione di partenza:<br/>{{getPositionFormatted(content.startPos)}}</span>
         <span style="flex: 1;">Posizione di arrivo:<br/>{{getPositionFormatted(content.endPos)}}</span>
@@ -36,20 +37,18 @@ const travelClientListItemComponent = {
                 return ''
             }
         },
-        askRefund() {
-            //TODO: 
-            console.log(this);
+        askRefund(event) {
+            this.$emit('submit', { name: 'refundReq', content: this.content.id });
         },
         reportDriver() {
-            //TODO: 
-            console.log(this);
+            this.$emit('submit', { name: 'reportDriver', content: this.content.id });
         },
         removeTravel() {
-            //TODO: 
             if (this.checkRemovable()) {
-                console.log(this);
-            }  
+                this.$emit('submit', { name:'removeTravel', content: this.content.id });
+            }
         }
+
     }
 }
 
@@ -60,6 +59,11 @@ window.onload = function () {
         components: {
             'list-item': travelClientListItemComponent,
             'ld-header': headerComponent
+        },
+        methods: {
+            handleSubmit(event) {
+                location.href = 'clients?' + event.name + "=" + event.content;
+            }
         }
     })
 }

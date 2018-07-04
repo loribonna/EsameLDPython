@@ -147,7 +147,7 @@ const checkboxInputComponent = {
 }
 
 const textInputComponent = {
-    template: `<input class="form-control ld_text_input" :placeholder="placeholder" :name="name" :type="type ? type : \'text\'" v-bind:class="{invalid: (!valid&&enable_error)}" v-bind:value="value" v-on:input="onInput">`,
+    template: `<input class="form-control ld_text_input" :class="{ld_input_invalid: enable_invalid}" :placeholder="placeholder" :name="name" :type="getType()" :value="value" v-on:input="onInput">`,
     props: [
         'value',
         'type',
@@ -159,23 +159,40 @@ const textInputComponent = {
     ],
     watch: {
         value: function (newVal, oldVal) {
-            this.onInput({ target: { value: newVal } });
+            if (!oldVal) {
+                this.onInput({ target: { value: newVal } });
+            }
+
+        },
+        enable_error: function (newVal, oldVal) {
+            if (newVal !== oldVal) {
+                this.enable_invalid = newVal && !this.valid;
+            }
         }
     },
     data: function () {
         return {
-            valid: null,
-            validatorRegExp: null
+            valid: false,
+            validatorRegExp: null,
+            enable_invalid: false
         }
     },
     methods: {
         onInput(event) {
             this.$emit('input', event.target.value);
-            this.valid = this.isValid(event.target.value)
+
+            this.valid = this.isValid(event.target.value);
+            if (this.enable_invalid && this.valid) {
+                this.enable_invalid = false;
+            }
+
         },
-        isValid(value = this.valid) {
+        getType() {
+            return this.type ? this.type : 'text';
+        },
+        isValid(value = this.value) {
             let valid = true;
-            if (this.required && value == null) {
+            if (this.required && (value == null || value === "")) {
                 valid = false;
             } else if (this.validatorRegExp && !this.validatorRegExp.test(value)) {
                 valid = false;

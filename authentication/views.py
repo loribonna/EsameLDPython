@@ -24,7 +24,7 @@ def registerForm(request):
             permission = Permission.objects.get(name='DRIVER')
             user.user_permissions.add(permission)
             user.save()
-            return redirect('/drivers')
+            return redirect('/drivers/profile')
         else:
             if Client.objects.filter(username=username).exists():
                 return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
@@ -37,7 +37,7 @@ def registerForm(request):
             return redirect('/clients')
 
     else:
-        return render(request, 'register/register.html', context={'user_data': {'user': username, 'pass': password}})
+        return render(request, 'register/register.html')
 
 
 def loginForm(request):

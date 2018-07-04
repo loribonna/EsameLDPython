@@ -11,7 +11,8 @@
 
 {%block content%}
 
-<div id="app" userData="{{userData}}">
+<div id="app">
+    <div style="display: none" >[[userData={{userData}}]]</div>
     <ld-header v-if="db_consistent" action="/drivers" main_icon="arrow-left" tooltip="Return to Travels"></ld-header>
     <ld-badge style="margin-left:3px; margin-right:3px; width:99%; display: block; border: 1px solid #ced4da; border-radius: .25rem">Dati del Profilo</ld-badge>
     <form method="POST" @submit="handleSave">
@@ -21,16 +22,16 @@
             <text-input class="ld-driver-profile-cell" name="info" placeholder="Info" v-model="profile.info" v-on:valid="validCheck" :enable_error="enable_error"></text-input>
         </div>
         <div class="ld-driver-profile-row">
-            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="ratePerKM" placeholder="Tariffa al KM (€)" v-model="profile.ratePerKM" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>        
-            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="commonStartPos.lat" placeholder="Latitudine comune" v-model="profile.commonStartPos.lat" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
-            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="commonStartPos.lng" placeholder="Longitudine comune" v-model="profile.commonStartPos.lng" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="rate_per_km" placeholder="Tariffa al KM (€)" v-model="profile.rate_per_km" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>        
+            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="common_start_pos.lat" placeholder="Latitudine comune" v-model="profile.common_start_pos.lat" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="common_start_pos.lng" placeholder="Longitudine comune" v-model="profile.common_start_pos.lng" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
         </div>
         <div class="ld-driver-profile-row">
-            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="maxDistance" placeholder="Distanza massima" v-model="profile.maxDistance" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
-            <text-input validator="timeValidator" class="ld-driver-profile-cell" name="timeAvail.startTime" placeholder="Ora inizio disponibilità" v-model="profile.timeAvail.startTime" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
-            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="timeAvail.duration" placeholder="Durata disponibilità" v-model="profile.timeAvail.duration" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="max_distance" placeholder="Distanza massima" v-model="profile.max_distance" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+            <text-input validator="timeValidator" class="ld-driver-profile-cell" name="start_time" placeholder="Ora inizio disponibilità" v-model="profile.start_time" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="duration" placeholder="Durata disponibilità" v-model="profile.duration" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
         </div>
-        <ld-button tooltip="Salva le modifiche" style="margin-left: 5px" v-on:click="$emit('submit',$event)">Salva</ld-button>
+        <ld-button tooltip="Salva le modifiche" style="margin-left: 5px" v-on:click="submitForm">Salva</ld-button>
     </form>
     <ld-divider></ld-divider>
     <div style="width: 100%;height:256px;position:absolute;z-index:1">

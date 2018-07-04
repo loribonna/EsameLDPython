@@ -1,4 +1,5 @@
 const travelAdminListItemComponent = {
+    //TODO;
     template: `<div style="display: flex;" class="list-group-item list-group-item-action">
         <span style="flex: 1;">Posizione di partenza:<br/>{{getPositionFormatted(content.startPos)}}</span>
         <span style="flex: 1;">Posizione di arrivo:<br/>{{getPositionFormatted(content.endPos)}}</span>
@@ -33,13 +34,11 @@ const travelAdminListItemComponent = {
             }
         },
         acceptRefound() {
-            //TODO: 
-            console.log(this);
+            this.$emit('submit', { name: 'acceptRef', content: this.content.id });
         },
         removeTravel() {
-            //TODO: 
             if (this.checkRemovable()) {
-                console.log(this);
+                this.$emit('submit', { name: 'removeTravel', content: this.content.id });
             }
         }
     }
@@ -53,6 +52,11 @@ window.onload = function () {
         components: {
             'ld-header': headerComponent,
             'list-item': travelAdminListItemComponent
+        },
+        methods: {
+            handleSubmit(event) {
+                location.href = 'administration?' + event.name + "=" + event.content;
+            }
         }
     })
 }

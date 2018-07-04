@@ -13,8 +13,7 @@ const resultItemComponent = {
     },
     methods: {
         chooseTravel(event) {
-            //TODO:
-            console.log(this.content);
+            this.$emit('submit', { name: 'chooseTravel', content: this.content.id });
         }
     }
 }
@@ -31,6 +30,7 @@ window.onload = function () {
         components: {
             'result-item': resultItemComponent,
             'ld-button': buttonComponent,
+            'ld-badge': badgeComponent
         },
         methods: {
             formatLatLng(pos: String) {
@@ -46,6 +46,9 @@ window.onload = function () {
             },
             returnMap(event){
                 location.href="/map"
+            },
+            handleSubmit(event) {
+                location.href = 'result?' + event.name + "=" + event.content;
             }
         }
     })

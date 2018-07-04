@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'administrator.apps.AdministratorConfig'
 ]
 
-LOGIN_URL = "/auth/login/"
+LOGIN_URL = "/auth/login"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

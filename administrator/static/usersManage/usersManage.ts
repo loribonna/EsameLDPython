@@ -1,4 +1,5 @@
 const usersListItemComponent = {
+    //TODO;
     template: `<div style="display: flex;" class="list-group-item list-group-item-action">
         <div style="display:flex; flex:1"><ld-badge color="info">{{getUserTypeFormatted()}}</ld-badge></div>
         <span style="flex: 1;">Nome:<br/>{{content.name}}</span>
@@ -20,8 +21,7 @@ const usersListItemComponent = {
             return isValidDate(date) ? formatDate(date) : ''
         },
         reportUser() {
-            //TODO:
-            console.log(this);
+            this.$emit('submit', { name: 'reportUser', content: this.content.id });
         },
         getUserTypeFormatted(){
             if(this.content && this.content.user_type){
@@ -41,6 +41,11 @@ window.onload = function () {
         components: {
             'ld-header': headerComponent,
             'list-item': usersListItemComponent
+        },
+        methods: {
+            handleSubmit(event) {
+                location.href = 'administration?' + event.name + "=" + event.content;
+            }
         }
     })
 }

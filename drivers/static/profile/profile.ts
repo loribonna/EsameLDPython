@@ -1,13 +1,13 @@
 interface IDriver extends IUserBase {
     travels: ITravel,
-    ratePerKM: Number,
-    commonStartPos: IPos,
-    maxDistance: Number,
-    timeAvail: ITimeAvail
+    rate_per_km: Number,
+    common_start_pos: IPos,
+    max_distance: Number,
+    time_avail: ITimeAvail
 }
 
 interface ITimeAvail {
-    startTime: String,
+    start_time: String,
     duration: Number
 }
 
@@ -31,16 +31,14 @@ window.onload = function () {
                 profile: {
                     user: null,
                     info: null,
-                    ratePerKM: null,
-                    commonStartPos: {
+                    rate_per_km: null,
+                    common_start_pos: {
                         lat: null,
                         lng: null
                     },
-                    maxDistance: null,
-                    timeAvail: {
-                        startTime: null,
-                        duration: null
-                    }
+                    max_distance: null,
+                    start_time: null,
+                    duration: null
                 },
                 marker: null,
                 map: null,
@@ -53,20 +51,22 @@ window.onload = function () {
                     event.preventDefault();
                     this.enable_error = true;
                 }
-                event.preventDefault();
             },
             validCheck(event) {
                 this.checkers[event.name] = event.value;
             },
             selectPosition(event) {
                 if (event.latlng) {
-                    this.profile.commonStartPos.lat = event.latlng.lat;
-                    this.profile.commonStartPos.lng = event.latlng.lng;
+                    this.profile.common_start_pos.lat = event.latlng.lat;
+                    this.profile.common_start_pos.lng = event.latlng.lng;
                     this.addMarker(event.latlng);
                 }
             },
+            submitForm(event) {
+                this.$emit('submit', event);
+            },
             addMarker(latlng) {
-                if (this.profile.commonStartPos.lat && this.profile.commonStartPos.lng) {
+                if (latlng.lat && latlng.lng) {
                     let marker = null;
                     if (this.marker) {
                         this.removeMarker();
@@ -84,10 +84,15 @@ window.onload = function () {
         mounted: function () {
             this.map = (<any[]>this.$children).find(c => c['map'] != null && typeof c['map'] !== "function").map;
             if (this.userData) {
-                this.db_consistent = true;
+                if (this.userData.common_start_pos
+                    && this.userData.common_start_pos.lat
+                    && this.userData.common_start_pos.lng
+                    && this.userData.time_avail) {
+                    this.db_consistent = true;
+                }
                 this.profile = this.userData;
-                if (this.profile.commonStartPos) {
-                    this.addMarker(this.profile.commonStartPos);
+                if (this.profile.common_start_pos) {
+                    this.addMarker(this.profile.common_start_pos);
                 }
             }
         }

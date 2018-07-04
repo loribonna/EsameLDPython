@@ -12,12 +12,11 @@ class TimeAvail(models.Model):
 
 
 class Driver(UserBase):
-    driver_rate_per_km = models.PositiveIntegerField(default=0)
-    driver_common_start_pos = models.ForeignKey(
-        PosLatLng, on_delete=models.CASCADE
-    )
-    driver_max_distance = models.PositiveIntegerField(default=0)
-    driver_time_avail = models.ForeignKey(TimeAvail, on_delete=models.CASCADE, null=True)
+    rate_per_km = models.PositiveIntegerField()
+    common_start_pos_lat = models.FloatField(default=41.98)
+    common_start_pos_lng = models.FloatField(default=12.5)
+    max_distance = models.PositiveIntegerField()
+    time_avail = models.ForeignKey(TimeAvail, on_delete=models.CASCADE, null=True)
 
     class Meta:
         permissions = (('driver', 'DRIVER'),)

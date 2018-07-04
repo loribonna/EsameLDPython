@@ -12,7 +12,7 @@
 <div id="app">
     <ld-header action="/administrator" main_icon="plane" tooltip="Manage Travels"></ld-header>
     {% for user in users %}
-        <list-item :content="{{user}}"></list-item>
+        <list-item v-on:submit="handleSubmit" :content="{{user}}"></list-item>
     {% endfor %}
 </div>
 
