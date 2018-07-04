@@ -18,6 +18,20 @@ const checkDateDifference = (d1, d2, maxDiff) => {
     return (d2 - d1) <= maxDiff;
 }
 
+const buildQuery = (obj): string[] => {
+    let query = [];
+    for(const prop in obj) {
+        if(typeof obj[prop] === "string" || typeof obj[prop] === "number") {
+            query.push(prop + "=" + obj[prop]);
+        } else if (typeof obj[prop] === "object" && !Array.isArray(obj[prop])) {
+            query.push(...buildQuery(obj[prop]).map(q => prop + "." + q));
+        } else if (Array.isArray(obj[prop])) {
+            query.push(prop + "=" + JSON.stringify(obj[prop]))
+        }
+    }
+    return query;
+}
+
 const MAX_DATE_DIFF = 15 * 60 * 1000; // 15 minutes
 
 const VALIDATORS = {

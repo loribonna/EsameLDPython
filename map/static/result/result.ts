@@ -1,10 +1,9 @@
 
 const resultItemComponent = {
     template: `<a v-on:click="chooseTravel" href="#" style="display: flex;" class="list-group-item list-group-item-action">
-        <span style="flex: 1;">Nome: {{content.name}}</span>
-        <span style="flex: 1;">Costo: {{content.cost}}</span>
+        <span style="flex: 1;">Nome autista: {{content.driver.name}}</span>
+        <span style="flex: 1;">Costo: {{content.fee}}</span>
         <span v-if="content.message" style="flex: 1;">Info: {{content.message}}</span>
-
     </a>`,
     props: ['content'],
     components: {
@@ -13,7 +12,7 @@ const resultItemComponent = {
     },
     methods: {
         chooseTravel(event) {
-            this.$emit('submit', { name: 'chooseTravel', content: this.content.id });
+            this.$emit('submit', { name: 'chooseTravel', content: this.content });
         }
     }
 }
@@ -48,7 +47,11 @@ window.onload = function () {
                 location.href="/map"
             },
             handleSubmit(event) {
-                location.href = 'result?' + event.name + "=" + event.content;
+                let query = buildQuery(event.content).reduce((acc, val) => {
+                    return acc += val + "&"
+                }, "?");
+                query = query.slice(0, query.length - 1);
+                location.href = 'confirm' + query;
             }
         }
     })

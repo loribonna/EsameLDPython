@@ -34,7 +34,7 @@ def registerForm(request):
             permission = Permission.objects.get(name='CLIENT')
             user.user_permissions.add(permission)
             user.save()
-            return redirect('/clients')
+            return redirect('/map')
 
     else:
         return render(request, 'register/register.html')
@@ -53,7 +53,7 @@ def loginForm(request):
                 if user.has_perm('drivers.driver'):
                     return redirect('/drivers/profile')
                 if user.has_perm('clients.client'):
-                    return redirect('/clients')
+                    return redirect('/map')
             else:
                 return render(request, 'login/login.html', context={'inactive': True})
         else:
