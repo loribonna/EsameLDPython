@@ -3,25 +3,26 @@ interface IClient extends IUserBase { }
 const travelClientListItemComponent = {
     //TODO;
     template: `<div style="display: flex;" class="list-group-item list-group-item-action">
-        <span style="flex: 1;">Posizione di partenza:<br/>{{getPositionFormatted(content.startPos)}}</span>
-        <span style="flex: 1;">Posizione di arrivo:<br/>{{getPositionFormatted(content.endPos)}}</span>
-        <span style="flex: 1;">Data/Ora inizio:<br/>{{formatDate(content.startDateTime)}}</span>
-        <span style="flex: 1;">Costo: {{content.cost}}</span>
-        <ld-button style="margin-right:5px" v-on:click="askRefund" btnType="warning">Richiedi rimborso <span class="fa fa-recycle"></span></ld-button>
+        <span style="flex: 1;">Posizione di partenza:<br/>{{getPositionFormatted(content.start_pos)}}</span>
+        <span style="flex: 1;">Posizione di arrivo:<br/>{{getPositionFormatted(content.end_pos)}}</span>
+        <span style="flex: 1;">Data/Ora inizio:<br/>{{formatDate(content.start_date_time)}}</span>
+        <span style="flex: 1;">Costo:<br>{{formatNum(content.fee)}} €</span>
+        <span style="flex: 1;">Autista:<br>{{content.driver}}</span>
+        <ld-button :disabled="content.refound_request" style="margin-right:5px" v-on:click="askRefund" btnType="warning">Richiedi rimborso <span class="fa fa-recycle"></span></ld-button>
         <ld-button tooltip="Report Driver" style="margin-right:5px" v-on:click="reportDriver" btnType="warning"><span class="fa fa-frown-o"></span></ld-button>
         <ld-button v-on:click="removeTravel" v-if="checkRemovable()" btnType="danger">X</ld-button>
     </div>`,
     props: [
         'content'
     ],
-    mounted: function () { },
     components: {
         'ld-button': buttonComponent
     },
     methods: {
+        formatNum(n) { return formatNum(n) },
         checkRemovable() {
-            if (this.content && this.content.startDateTime) {
-                const date = new Date(this.content.startDateTime);
+            if (this.content && this.content.start_date_time) {
+                const date = new Date(this.content.start_date_time);
                 return isValidDate(date) && checkDateDifference(date.getTime(), Date.now(), MAX_DATE_DIFF);
             }
             return false;
@@ -30,9 +31,9 @@ const travelClientListItemComponent = {
             const date = new Date(d);
             return isValidDate(date) ? formatDate(date) : ''
         },
-        getPositionFormatted(pos) {
-            if (pos && pos.lat && pos.lng) {
-                return 'lat: ' + formatNum(pos.lat) + ', lng: ' + formatNum(pos.lng);
+        getPositionFormatted(pos: any[]) {
+            if (pos && pos.length == 2) {
+                return 'lat: ' + formatNum(pos[0]) + ', lng: ' + formatNum(pos[1]);
             } else {
                 return ''
             }

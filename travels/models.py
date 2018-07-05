@@ -8,8 +8,8 @@ DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S'
 
 
 class Travel(models.Model):
-    client=models.ForeignKey(Client, on_delete=models.CASCADE)
-    driver=models.ForeignKey(Driver, on_delete=models.CASCADE)
+    client=models.ForeignKey(Client, on_delete=models.DO_NOTHING)
+    driver=models.ForeignKey(Driver, on_delete=models.DO_NOTHING)
     fee=models.FloatField(default=0)
     start_date_time=models.DateTimeField(auto_now_add=True, blank=True)
     end_date_time=models.DateTimeField(auto_now_add=True, blank=True)
@@ -17,8 +17,30 @@ class Travel(models.Model):
     end_pos=models.ForeignKey(PosLatLng, on_delete=models.CASCADE, related_name='endPos')
     refound_request=models.BooleanField(default=False)
 
-    def travelData(self):
-        return 'Cost: '+self.fee.__str__()+', Date: '+self.getDateTime()
+    def getDriverName(self):
+        return self.driver.username
 
-    def getDateTime(self):
-        return datetime.datetime.strptime(self.start_date_time).strftime(DATETIME_FORMAT)
+    def getStartLatLng(self):
+        if self.start_pos and self.start_pos.lat and self.start_pos.lng:
+            return [self.start_pos.lat, self.start_pos.lng]
+        return []
+
+    def getEndLatLng(self):
+        if self.end_pos and self.end_pos.lat and self.end_pos.lng:
+            return [self.end_pos.lat, self.end_pos.lng]
+        return []
+
+    def getRefReq(self):
+        if self.refound_request==True:
+            return 1
+        return 0
+
+    def getStartDate(self):
+        if self.start_date_time != None:
+            return self.start_date_time.isoformat()
+        return ""
+
+    def getEndDate(self):
+        if self.end_date_time != None:
+            return self.end_date_time.isoformat()
+        return ""

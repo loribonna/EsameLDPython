@@ -3,7 +3,7 @@ const capitalizeString = (s: String) => {
 }
 
 const formatNum = (n) => {
-    return n && typeof n === 'number' ? n : 0;
+    return n && typeof n === 'number' ? n.toFixed(2) : 0;
 }
 
 const formatDate = (d: Date) => {
