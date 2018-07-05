@@ -17,6 +17,6 @@ class Driver(UserBase):
     common_start_pos_lng = models.FloatField(default=12.5)
     max_distance = models.PositiveIntegerField()
     time_avail = models.ForeignKey(TimeAvail, on_delete=models.CASCADE, null=True)
-
+    reports = models.PositiveIntegerField(default=0)
     class Meta:
         permissions = (('driver', 'DRIVER'),)

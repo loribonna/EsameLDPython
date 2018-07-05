@@ -1,14 +1,13 @@
 interface IClient extends IUserBase { }
 
 const travelClientListItemComponent = {
-    //TODO;
     template: `<div style="display: flex;" class="list-group-item list-group-item-action">
         <span style="flex: 1;">Posizione di partenza:<br/>{{getPositionFormatted(content.start_pos)}}</span>
         <span style="flex: 1;">Posizione di arrivo:<br/>{{getPositionFormatted(content.end_pos)}}</span>
         <span style="flex: 1;">Data/Ora inizio:<br/>{{formatDate(content.start_date_time)}}</span>
         <span style="flex: 1;">Costo:<br>{{formatNum(content.fee)}} €</span>
         <span style="flex: 1;">Autista:<br>{{content.driver}}</span>
-        <ld-button :disabled="content.refound_request" style="margin-right:5px" v-on:click="askRefund" btnType="warning">Richiedi rimborso <span class="fa fa-recycle"></span></ld-button>
+        <ld-button :disabled="checkRefRequest()" style="margin-right:5px" v-on:click="askRefund" btnType="warning">Richiedi rimborso <span class="fa fa-recycle"></span></ld-button>
         <ld-button tooltip="Report Driver" style="margin-right:5px" v-on:click="reportDriver" btnType="warning"><span class="fa fa-frown-o"></span></ld-button>
         <ld-button v-on:click="removeTravel" v-if="checkRemovable()" btnType="danger">X</ld-button>
     </div>`,
@@ -19,6 +18,10 @@ const travelClientListItemComponent = {
         'ld-button': buttonComponent
     },
     methods: {
+        checkRefRequest(){
+            console.log(this.content.refound_request)
+            return this.content.refound_request == '1'
+        },
         formatNum(n) { return formatNum(n) },
         checkRemovable() {
             if (this.content && this.content.start_date_time) {

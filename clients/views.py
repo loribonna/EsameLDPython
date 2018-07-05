@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from travels.models import Travel
 from clients.models import Client
+from drivers.models import Driver
 
 def getTravelContext(travel):
     if travel.driver != None:
@@ -19,7 +20,21 @@ def getTravelContext(travel):
         }
     return {}
 
+@login_required
 def travelsList(request):
+    #TODO: verify
+    if 'refundReq' in request.GET:
+        travel=Travel.objects.get(pk=request.GET['refundReq'])
+        travel.refound_request=True
+        travel.save()
+    elif 'reportDriver' in request.GET:
+        travel=Travel.objects.get(pk=request.GET['reportDriver'])
+        driver=Driver.objects.get(pk=travel.driver.pk)
+        driver += 1
+        driver.save()
+    elif 'removeTravel' in request.GET:
+        travel=Travel.objects.get(pk=request.GET['removeTravel']).delete()
+
     client=Client.objects.get(username = request.user)
     travels=Travel.objects.filter(client=client)
     context = {
