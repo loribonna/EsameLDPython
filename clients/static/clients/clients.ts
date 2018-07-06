@@ -19,7 +19,6 @@ const travelClientListItemComponent = {
     },
     methods: {
         checkRefRequest(){
-            console.log(this.content.refound_request)
             return this.content.refound_request == '1'
         },
         formatNum(n) { return formatNum(n) },

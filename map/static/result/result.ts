@@ -49,7 +49,7 @@ window.onload = function () {
             handleSubmit(event) {
                 let query = buildQuery(event.content).reduce((acc, val) => {
                     return acc += val + "&"
-                }, "?");
+                }, "?");                
                 query = query.slice(0, query.length - 1);
                 location.href = 'confirm' + query;
             }

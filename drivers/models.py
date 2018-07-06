@@ -3,6 +3,9 @@ from map.models import PosLatLng
 from authentication.models import UserBase
 from datetime import datetime
 
+def getFieldIfExists(field):
+    return field if field != None else ''
+
 class TimeAvail(models.Model):
     start_time = models.CharField(max_length=5,default=datetime.now())
     duration = models.PositiveIntegerField(default=0)
@@ -20,3 +23,30 @@ class Driver(UserBase):
     reports = models.PositiveIntegerField(default=0)
     class Meta:
         permissions = (('driver', 'DRIVER'),)
+
+    def isDBConsistent(self):
+        return (self.max_distance != None 
+            and self.rate_per_km != None 
+            and self.common_start_pos_lat != None 
+            and self.common_start_pos_lng != None 
+            and self.time_avail.start_time != None 
+            and self.time_avail.duration != None)
+
+    def getDriverDict(self):
+        ret = {
+            'user': getFieldIfExists(self.username),
+            'info': getFieldIfExists(self.info),
+            'rate_per_km': getFieldIfExists(self.rate_per_km),
+            'common_start_pos': {
+                'lat': getFieldIfExists(self.common_start_pos_lat),
+                'lng': getFieldIfExists(self.common_start_pos_lng)
+            },
+            'max_distance': getFieldIfExists(self.max_distance),
+            'start_time': '',
+            'duration': '',
+            'db_consistent': 1 if self.isDBConsistent() else 0
+        }
+        if self.time_avail != None:
+            ret['start_time'] = getFieldIfExists(self.time_avail.start_time)
+            ret['duration']= getFieldIfExists(self.time_avail.duration)
+        return ret

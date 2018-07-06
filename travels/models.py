@@ -11,14 +11,25 @@ class Travel(models.Model):
     client=models.ForeignKey(Client, on_delete=models.DO_NOTHING)
     driver=models.ForeignKey(Driver, on_delete=models.DO_NOTHING)
     fee=models.FloatField(default=0)
-    start_date_time=models.DateTimeField(auto_now_add=True, blank=True)
-    end_date_time=models.DateTimeField(auto_now_add=True, blank=True)
+    start_date_time=models.DateTimeField(blank=True)
+    end_date_time=models.DateTimeField(blank=True)
     start_pos=models.ForeignKey(PosLatLng, on_delete=models.CASCADE, related_name='startPos')
     end_pos=models.ForeignKey(PosLatLng, on_delete=models.CASCADE, related_name='endPos')
     refound_request=models.BooleanField(default=False)
 
-    def getDriverName(self):
-        return self.driver.username
+    def getTravelDict(self):
+        if self.driver != None:
+            return {
+                'fee': self.fee,
+                'driver': self.driver.username,
+                'start_date_time': self.getStartDate(),
+                'end_date_time': self.getEndDate(),
+                'start_pos': self.getStartLatLng(),
+                'end_pos': self.getEndLatLng(),
+                'refound_request': self.getRefReq(),
+                'id': self.pk
+            }
+        return {}
 
     def getStartLatLng(self):
         if self.start_pos and self.start_pos.lat and self.start_pos.lng:

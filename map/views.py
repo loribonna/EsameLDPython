@@ -39,33 +39,39 @@ def checkInnerPos(centerLat, centerLng, filterLat, filterLng, range):
 
 
 def checkValidDriver(driver, startPos, endPos, sTime):
-    return checkInnerPos(
-        centerLat=driver.common_start_pos_lat,
-        centerLng=driver.common_start_pos_lng,
-        filterLat=startPos[0],
-        filterLng=startPos[1],
-        range=driver.max_distance
-        ) and checkInnerPos(
-        centerLat=driver.common_start_pos_lat,
-        centerLng=driver.common_start_pos_lng,
-        filterLat=endPos[0],
-        filterLng=endPos[1],
-        range=driver.max_distance
-        ) and getDeltaTime(driver.time_avail.start_time, sTime) <= (getInt(driver.time_avail.duration) * 60)
-
+    if driver.isDBConsistent():
+        return checkInnerPos(
+            centerLat=driver.common_start_pos_lat,
+            centerLng=driver.common_start_pos_lng,
+            filterLat=startPos[0],
+            filterLng=startPos[1],
+            range=driver.max_distance
+            ) and checkInnerPos(
+            centerLat=driver.common_start_pos_lat,
+            centerLng=driver.common_start_pos_lng,
+            filterLat=endPos[0],
+            filterLng=endPos[1],
+            range=driver.max_distance
+            ) and getDeltaTime(driver.time_avail.start_time, sTime) <= (getInt(driver.time_avail.duration) * 60)
+    return False
 
 def createTempDriver(driver, startPos, endPos, sTime):
     price = calcDistance(startPos, endPos) * driver.rate_per_km
-    return {
-        'fee': price,
-        'start_date_time': datetime.now().isoformat(),
-        'start_pos': startPos,
-        'end_pos': endPos,
-        'driver': {
-            'id': driver.pk,
-            'name': driver.username
+    today = datetime.now()
+    timeParts = sTime.split(':')
+    if timeParts.__len__() == 2:
+        start_date_time=datetime(today.year, today.month, today.day, int(timeParts[0]), int(timeParts[1]))
+        return {
+            'fee': price,
+            'start_date_time': start_date_time.isoformat(),
+            'start_pos': startPos,
+            'end_pos': endPos,
+            'driver': {
+                'id': driver.pk,
+                'name': driver.username
+            }
         }
-    }
+    return {}
 
 
 def map(request):
@@ -105,7 +111,6 @@ def confirm(request):
         if driver != None and client != None:
             startPos.save()
             endPos.save()
-
             travel=Travel.objects.create(
                 start_date_time = request.GET['start_date_time'],
                 start_pos = startPos,
@@ -114,7 +119,6 @@ def confirm(request):
                 client = client,
                 fee = request.GET['fee'],
             )
-
             travel.save()
 
             return redirect('/clients')

@@ -87,7 +87,9 @@ window.onload = function () {
                 if (this.userData.common_start_pos
                     && this.userData.common_start_pos.lat
                     && this.userData.common_start_pos.lng
-                    && this.userData.time_avail) {
+                    && this.userData.start_time
+                    && this.userData.duration
+                    && this.userData.rate_per_km) {
                     this.db_consistent = true;
                 }
                 this.profile = this.userData;

@@ -3,20 +3,14 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from .models import Driver, TimeAvail
-
-def getFieldIfExists(field):
-    if field != None:
-        return field
-    return ''
+from travels.models import Travel
 
 @login_required
 def travelsList(request):
-    context = {'travels': [
-        {'startPos': {'lat': 42, 'lng': 12}, 'endPos': {'lat': 42, 'lng': 32},
-            'cost': 12, 'startDateTime': datetime.now().isoformat()},
-        {'startPos': {'lat': 42}, 'endPos': {'lat': 'a', 'lng': 32},
-            'cost': 32, 'startDateTime': datetime.now().isoformat()}
-    ]}
+    travels = Travel.objects.filter(driver__username=request.user)
+    context = {
+        'travels': [t.getTravelDict() for t in travels]
+    }
     return render(request, 'drivers/drivers.html', context=context)
 
 
@@ -31,7 +25,7 @@ def driverProfile(request):
         and 'max_distance' in request.POST
         and 'start_time' in request.POST
         and 'duration' in request.POST):
-        print("A")
+
         time_avail = TimeAvail.objects.create(
             start_time=request.POST['start_time'],
             duration=request.POST['duration']
@@ -49,22 +43,7 @@ def driverProfile(request):
         return redirect('/drivers')
 
     context = {
-        'userData': {
-            'user': getFieldIfExists(driver.username),
-            'info': getFieldIfExists(driver.info),
-            'rate_per_km': getFieldIfExists(driver.rate_per_km),
-            'common_start_pos': {
-                'lat': getFieldIfExists(driver.common_start_pos_lat),
-                'lng': getFieldIfExists(driver.common_start_pos_lng)
-            },
-            'max_distance': getFieldIfExists(driver.max_distance),
-            'start_time': '',
-            'duration': ''
-        }
+        'userData': driver.getDriverDict()
     }
-    if driver.time_avail != None:
-        context['userData']['start_time'] = getFieldIfExists(driver.time_avail.start_time)
-        context['userData']['duration']= getFieldIfExists(driver.time_avail.duration)
         
-    print(context)
     return render(request, 'profile/profile.html', context=context)

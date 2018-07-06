@@ -15,29 +15,28 @@ def registerForm(request):
         if 'driver_enable' in request.POST:
             driver_enable = request.POST['driver_enable']
 
-        if driver_enable != None:
-            if Driver.objects.filter(username=username).exists():
-                return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
-            user = Driver.objects.create_user(
-                username=username, password=password
-            )
-            permission = Permission.objects.get(name='DRIVER')
-            user.user_permissions.add(permission)
-            user.save()
-            return redirect('/drivers/profile')
-        else:
-            if Client.objects.filter(username=username).exists():
-                return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
-            user = Client.objects.create_user(
-                username=username, password=password
-            )
-            permission = Permission.objects.get(name='CLIENT')
-            user.user_permissions.add(permission)
-            user.save()
-            return redirect('/map')
+            if driver_enable != None:
+                if Driver.objects.filter(username=username).exists():
+                    return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
+                user = Driver.objects.create_user(
+                    username=username, password=password
+                )
+                permission = Permission.objects.get(name='DRIVER')
+                user.user_permissions.add(permission)
+                user.save()
+                return redirect('/drivers/profile')
+            else:
+                if Client.objects.filter(username=username).exists():
+                    return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
+                user = Client.objects.create_user(
+                    username=username, password=password
+                )
+                permission = Permission.objects.get(name='CLIENT')
+                user.user_permissions.add(permission)
+                user.save()
+                return redirect('/map')
 
-    else:
-        return render(request, 'register/register.html')
+    return render(request, 'register/register.html')
 
 
 def loginForm(request):
