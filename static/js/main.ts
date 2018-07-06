@@ -42,7 +42,8 @@ const VALIDATORS = {
     numberValidator: <RegExp>/^(-)?[0-9]*([.][0-9]*)?$/,
     urlValidator: <RegExp>/(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/,
     dateWithoutYearValidator: <RegExp>/^[0-9]{1,2}(-|\/)?[0-9]{1,2}$/,
-    objectID: <RegExp>/^[0-9a-fA-F]{24}$/
+    objectID: <RegExp>/^[0-9a-fA-F]{24}$/,
+    dateValidator: /^(3[01]|[12][0-9]|0?[1-9])\/(1[0-2]|0?[1-9])\/([0-9]{2}|[0-9]{4})$/
 }
 
 const DEFAULT_CENTER = [41.8931, 12.4828];

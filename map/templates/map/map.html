@@ -16,10 +16,17 @@
     <ld-leaflet v-on:dblclick="addMarker">
         <div style="position:absolute; z-index:500; right:0px;width:95%; margin-left:5%">
             <ld-header action="/clients" tooltip="Return MAP"></ld-header>
+            <ld-badge style="display: block; padding: 5px; background-color: red; color: yellow" v-if="time_error">
+                Data/Ora di inizio precedente alla attuale!
+            </ld-badge>
             <div style="display: block; margin-left: auto; margin-right: 0; width:15%">
-                <div style="padding: 5px">
+                <div style="display: block; padding: 5px">
                     <ld-badge>Ora partenza: </ld-badge>
-                    <text-input style="width:120px" :enable_error="enable_error" name="sTime" validator="timeValidator" v-on:valid="validCheck" v-model="sTime"></text-input>
+                    <text-input placeholder="Ora partenza" style="width:100%" :enable_error="enable_error" name="sTime" validator="timeValidator" v-on:valid="validCheck" v-model="sTime" required="true"></text-input>
+                </div>
+                <div style="display: block; padding: 5px">
+                    <ld-badge>Giorno partenza: </ld-badge>
+                    <text-input placeholder="Giorno partenza" style="width:100%" :enable_error="enable_error" name="sDay" validator="dateValidator" v-on:valid="validCheck" v-model="sDay" required="true"></text-input>
                 </div>
                 <position-label :marker_pos="getMarkerPos('start')" marker_name="start" v-if="markers.start" v-on:delete="removeMarker">Inizio:<br/></position-label>
                 <position-label btn_type="danger" :marker_pos="markers.end._latlng" :marker_name="'end'" v-if="markers.end" v-on:delete="removeMarker">Fine:<br/></position-label>

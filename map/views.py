@@ -55,12 +55,13 @@ def checkValidDriver(driver, startPos, endPos, sTime):
             ) and getDeltaTime(driver.time_avail.start_time, sTime) <= (getInt(driver.time_avail.duration) * 60)
     return False
 
-def createTempDriver(driver, startPos, endPos, sTime):
+def createTempTravel(driver, startPos, endPos, sTime, sDay):
     price = calcDistance(startPos, endPos) * driver.rate_per_km
     today = datetime.now()
     timeParts = sTime.split(':')
+    dayParts = sDay.split('/')
     if timeParts.__len__() == 2:
-        start_date_time=datetime(today.year, today.month, today.day, int(timeParts[0]), int(timeParts[1]))
+        start_date_time=datetime(int(dayParts[2]), int(dayParts[1]), int(dayParts[0]), int(timeParts[0]), int(timeParts[1]))
         return {
             'fee': price,
             'start_date_time': start_date_time.isoformat(),
@@ -79,13 +80,14 @@ def map(request):
 
 
 def result(request):
-    if 'start' in request.GET and 'end' in request.GET and 'sTime' in request.GET:
+    if 'start' in request.GET and 'end' in request.GET and 'sTime' in request.GET and 'sDay' in request.GET:
         startPos = getLatLngFromString(request.GET['start'])
         endPos = getLatLngFromString(request.GET['end'])
         sTime = request.GET['sTime']
+        sDay = request.GET['sDay']
         if startPos.__len__() == 2 and endPos.__len__() == 2:
             drivers = [d for d in Driver.objects.all() if checkValidDriver(d, startPos, endPos, sTime)]
-            context = [createTempDriver(d, startPos, endPos, sTime) for d in drivers]
+            context = [createTempTravel(d, startPos, endPos, sTime, sDay) for d in drivers]
             return render(request, 'result/result.html', context={'results': context})
 
     return redirect('/map')

@@ -17,9 +17,11 @@ window.onload = function () {
                     start: null,
                     end: null
                 },
-                sTime: '9:30',
+                sTime: null,
+                sDay: null,
                 validators: {},
-                enable_error: false
+                enable_error: false,
+                time_error: false
             };
         },
         methods: {
@@ -31,8 +33,16 @@ window.onload = function () {
                 return [pos.lat, pos.lng]
             },
             sendData(event) {
-                if (this.validators.sTime) {
-                    location.href = `/map/calc?start=${this.getLatLng(this.markers.start._latlng)}&end=${this.getLatLng(this.markers.end._latlng)}&sTime=${this.sTime}`;
+                if (this.validators.sTime && this.validators.sDay) {
+                    const start_date_time = new Date(this.sDay);
+                    const timeParts = this.sTime.split(':');
+                    start_date_time.setHours(timeParts[0]);
+                    start_date_time.setMinutes(timeParts[1]);
+                    if (start_date_time.getTime() > Date.now()) {
+                        location.href = `/map/calc?start=${this.getLatLng(this.markers.start._latlng)}&end=${this.getLatLng(this.markers.end._latlng)}&sTime=${this.sTime}&sDay=${this.sDay}`;
+                    } else {
+                        this.time_error = true;
+                    }
                 } else {
                     this.enable_error = true;
                 }
