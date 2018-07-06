@@ -18,7 +18,7 @@ const resultItemComponent = {
 }
 
 window.onload = function () {
-    var router = new VueRouter({
+    const router = new VueRouter({
         mode: 'history',
         routes: []
     });

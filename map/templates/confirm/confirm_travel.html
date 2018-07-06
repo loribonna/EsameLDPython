@@ -1,0 +1,58 @@
+{%extends 'base.html'%}
+
+{% block extra_head_content %}
+<title>Confirm</title>
+{% load static %}
+<link rel="stylesheet" type="text/css" media="screen" href="{% static "confirm/confirm_travel.css" %}" />
+{% load static %}
+<script src="{% static "confirm/confirm_travel.js" %}"></script>
+{%endblock%}
+
+{%block content%}
+
+<div id="app">
+    <ld-header action="/map" main_icon="map" tooltip="Return MAP"></ld-header>
+    <ld-badge style="display: block">RICONTROLLA I DATI PRIMA DI CONFERMARE</ld-badge><br>
+    <form method="POST">
+        {% csrf_token %}
+        <div style="display: flex;flex-direction: row">
+            <div style="margin-left:1%">
+                <ld-badge>Latitudine posizione di partenza:<br></ld-badge>
+                <text-input readonly="readonly" style="width:inherit" name="start_pos.lat" :value="getValueFromRoute('start_pos',0)" ></text-input>
+            </div>
+            <div style="margin-left:1%">
+                <ld-badge>Longitudine posizione di partenza:<br></ld-badge>
+                <text-input readonly="readonly" style="width:inherit" name="start_pos.lon" :value="getValueFromRoute('start_pos',1)"></text-input>
+            </div>
+        </div>
+        <div style="display: flex;flex-direction: row">
+            <div style="margin-left:1%">
+                <ld-badge>Longitudine posizione di arrivo:<br></ld-badge>
+                <text-input readonly="readonly" style="width:inherit" name="end_pos.lat" :value="getValueFromRoute('end_pos',0)"></text-input>
+            </div>
+            <div style="margin-left:1%">
+                <ld-badge>Longitudine posizione di arrivo:<br></ld-badge>
+                <text-input readonly="readonly" style="width:inherit" name="end_pos.lon" :value="getValueFromRoute('end_pos',1)"></text-input>
+            </div>
+        </div>
+        <div style="display: flex;flex-direction: row">
+            <div style="margin-left:1%">
+                <ld-badge>Data/Ora di partenza:<br></ld-badge>
+                <text-input readonly="readonly" style="width:inherit" name="start_date_time" :value="getValueFromRoute('start_date_time')"></text-input>
+            </div>
+            <div style="margin-left:1%">
+                <ld-badge>Costo del viaggio:<br></ld-badge>
+                <text-input readonly="readonly" style="width:inherit" name="fee" :value="getValueFromRoute('fee')"></text-input>
+            </div>
+            <div style="margin-left:1%">
+                <ld-badge>Autista designato:<br></ld-badge>
+                <text-input readonly="readonly" style="width:inherit" name="driver.name" :value="getValueFromRoute('driver.name')"></text-input>
+                <text-input readonly="readonly" style="width:inherit; display: none" name="driver.id" :value="getValueFromRoute('driver.id')"></text-input>
+            </div>
+        </div>
+        <br>
+        <ld-button style="display: block; width: 100%" v-on:click="confirmTravel">CONFERMA E PAGA</ld-button>
+    </form>
+</div>
+
+{%endblock%}

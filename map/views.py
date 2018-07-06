@@ -91,36 +91,38 @@ def result(request):
     return redirect('/map')
 
 def confirm(request):
-    if ('fee' in request.GET
-        and 'start_date_time' in request.GET
-        and 'start_pos' in request.GET
-        and 'end_pos' in request.GET
-        and 'driver.id' in request.GET):
-        start=getLatLngFromString(request.GET['start_pos'])
+    if ('fee' in request.POST
+        and 'start_date_time' in request.POST
+        and 'start_pos.lat' in request.POST
+        and 'start_pos.lon' in request.POST
+        and 'end_pos.lat' in request.POST
+        and 'end_pos.lon' in request.POST
+        and 'driver.id' in request.POST):
+        #start=getLatLngFromString(request.POST['start_pos'])
         startPos=PosLatLng.objects.create(
-            lat = start[0],
-            lng = start[1]
+            lat = request.POST['start_pos.lat'],
+            lng = request.POST['start_pos.lon']
         )
-        end=getLatLngFromString(request.GET['end_pos'])
+        #end=getLatLngFromString(request.POST['end_pos'])
         endPos=PosLatLng.objects.create(
-            lat = end[0],
-            lng = end[1]
+            lat = request.POST['end_pos.lat'],
+            lng = request.POST['end_pos.lon']
         )
-        driver=Driver.objects.get(id = request.GET['driver.id'])
+        driver=Driver.objects.get(id = request.POST['driver.id'])
         client=Client.objects.get(username = request.user)
         if driver != None and client != None:
             startPos.save()
             endPos.save()
             travel=Travel.objects.create(
-                start_date_time = request.GET['start_date_time'],
+                start_date_time = request.POST['start_date_time'],
                 start_pos = startPos,
                 end_pos = endPos,
                 driver = driver,
                 client = client,
-                fee = request.GET['fee'],
+                fee = request.POST['fee'],
             )
             travel.save()
 
             return redirect('/clients')
 
-    return redirect('/map')
+    return render(request, 'confirm/confirm_travel.html')
