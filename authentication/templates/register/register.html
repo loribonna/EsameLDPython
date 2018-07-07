@@ -21,6 +21,8 @@
     <ld-badge style="background-color: red; color: white; display: block">Utente Già Esistente</ld-badge>
     {%endif%}
     <div class="ld_form">
+        <ld-badge style="display: block">Registrati</ld-badge>
+
         <form method="POST" @submit="handleSubmit" action='/auth/signup'>
             {% csrf_token %}
             <div class="ld_form_row">
@@ -30,7 +32,7 @@
             <div class="ld_form_row">
                 <check-input label="Autista" name="driver_enable" v-model="driver_enable"></check-input>
             </div>
-            <ld-button v-on:click="submitForm">Sign Up</ld-button>
+            <ld-button style="width:100%" v-on:click="submitForm">Sign Up</ld-button>
         </form>
     </div>
     

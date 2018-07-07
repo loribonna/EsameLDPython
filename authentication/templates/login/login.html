@@ -20,7 +20,7 @@
     <ld-badge style="background-color: red; color: white; display: block">Utente Inattivo</ld-badge>
     {%endif%}
     <div class="ld_form">
-        <ld-badge>Login</ld-badge>
+        <ld-badge style="display: block">Login</ld-badge>
         <form method="POST" @submit="handleLogin">
             {% csrf_token %}
             
@@ -28,7 +28,7 @@
                 <text-input style="flex:1" name="username" placeholder="username" v-model="user"  v-on:valid="validCheck" :enable_error="enable_error" required></text-input>
                 <text-input style="flex:1" name="password" placeholder="password" type="password" v-model="pass" v-on:valid="validCheck" :enable_error="enable_error"></text-input>
             </div>
-            <ld-button v-on:click="submitForm">Sign In</ld-button>        
+            <ld-button style="width:100%" v-on:click="submitForm">Sign In</ld-button>        
         </form>
     </div>
     

@@ -116,9 +116,9 @@ const dividerComponent = {
 
 const positionLabelComponent = {
     template: `
-        <div style="padding: 5px; display:flex">
+        <div style="padding: 5px; display:flex; width:100%">
             <button v-on:click="removeData" :class=getClass()>X</button>
-            <ld-badge><slot></slot>{{getLatLngFormatted()}}</ld-badge>
+            <ld-badge style="width:100%; display: inline-grid"><slot></slot>{{getLatLngFormatted()}}</ld-badge>
         </div>`,
     props: [
         'marker_pos',

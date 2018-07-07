@@ -30,7 +30,7 @@
                 </div>
                 <position-label :marker_pos="getMarkerPos('start')" marker_name="start" v-if="markers.start" v-on:delete="removeMarker">Inizio:<br/></position-label>
                 <position-label btn_type="danger" :marker_pos="markers.end._latlng" :marker_name="'end'" v-if="markers.end" v-on:delete="removeMarker">Fine:<br/></position-label>
-                <ld-button v-on:click="sendData" style="margin: 5px" v-if="markers.start && markers.end" >Mostra tariffe</ld-button>
+                <ld-button v-on:click="sendData" style="margin: 5px; width: 100%" v-if="markers.start && markers.end" >Mostra tariffe</ld-button>
             </div>
         </div>
     </ld-leaflet>
