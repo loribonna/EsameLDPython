@@ -12,30 +12,26 @@ def registerForm(request):
         username = request.POST['username']
         password = request.POST['password']
         
-        driver_enable = None
         if 'driver_enable' in request.POST:
-            driver_enable = request.POST['driver_enable']
-
-            if driver_enable != None:
-                if Driver.objects.filter(username=username).exists():
-                    return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
-                user = Driver.objects.create_user(
-                    username=username, password=password
-                )
-                permission = Permission.objects.get(name='DRIVER')
-                user.user_permissions.add(permission)
-                user.save()
-                return redirect('/drivers/profile')
-            else:
-                if Client.objects.filter(username=username).exists():
-                    return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
-                user = Client.objects.create_user(
-                    username=username, password=password
-                )
-                permission = Permission.objects.get(name='CLIENT')
-                user.user_permissions.add(permission)
-                user.save()
-                return redirect('/map')
+            if Driver.objects.filter(username=username).exists():
+                return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
+            user = Driver.objects.create_user(
+                username=username, password=password
+            )
+            permission = Permission.objects.get(name='DRIVER')
+            user.user_permissions.add(permission)
+            user.save()
+            return redirect('/drivers/profile')
+        else:
+            if Client.objects.filter(username=username).exists():
+                return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
+            user = Client.objects.create_user(
+                username=username, password=password
+            )
+            permission = Permission.objects.get(name='CLIENT')
+            user.user_permissions.add(permission)
+            user.save()
+            return redirect('/map')
 
     return render(request, 'register/register.html')
 
@@ -46,17 +42,18 @@ def loginForm(request):
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
-            usr = UserBase.objects.get(pk=user.pk)
-            if usr.black_listed == True:
-                return render(request, 'login/login.html', context={'blacklisted': True})
             if user.is_active:
                 login(request, user)
                 if user.is_superuser:
                     return redirect('/administrator')
-                if user.has_perm('drivers.driver'):
-                    return redirect('/drivers/profile')
-                if user.has_perm('clients.client'):
-                    return redirect('/map')
+                else:
+                    usr = UserBase.objects.get(pk=user.pk)
+                    if usr.black_listed == True:
+                        return render(request, 'login/login.html', context={'blacklisted': True})
+                    if user.has_perm('drivers.driver'):
+                        return redirect('/drivers/profile')
+                    if user.has_perm('clients.client'):
+                        return redirect('/map')
             else:
                 return render(request, 'login/login.html', context={'inactive': True})
         else:

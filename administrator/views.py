@@ -4,6 +4,7 @@ from travels.models import Travel
 from django.core.exceptions import ObjectDoesNotExist
 from drivers.models import Driver
 from clients.models import Client
+from django.contrib.auth.decorators import login_required
 
 def reportUser(usertype, id):
     try:
@@ -33,6 +34,7 @@ def blackListUser(usertype, id):
     except ObjectDoesNotExist:
         print('User deleted error')
 
+@login_required
 def adminTravelsPage(request):
     if 'acceptRef' in request.GET:
         try:
@@ -51,8 +53,8 @@ def adminTravelsPage(request):
     }
     return render(request, 'administrator/administrator.html', context=context)
 
+@login_required
 def adminUsersPage(request):
-    #TODO: verify
     if 'user_type' in request.GET:
         usertype=request.GET['user_type']
         if 'blackListUser' in request.GET:

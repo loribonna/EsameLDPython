@@ -40,7 +40,7 @@ def checkInnerPos(centerLat, centerLng, filterLat, filterLng, range):
 
 def checkValidDriver(driver, startPos, endPos, sTime):
     if driver.isDBConsistent():
-        return checkInnerPos(
+        return driver.isValid() and checkInnerPos(
             centerLat=driver.common_start_pos_lat,
             centerLng=driver.common_start_pos_lng,
             filterLat=startPos[0],
@@ -74,11 +74,11 @@ def createTempTravel(driver, startPos, endPos, sTime, sDay):
         }
     return {}
 
-
+@login_required
 def map(request):
     return render(request, 'map/map.html')
 
-
+@login_required
 def result(request):
     if 'start' in request.GET and 'end' in request.GET and 'sTime' in request.GET and 'sDay' in request.GET:
         startPos = getLatLngFromString(request.GET['start'])
@@ -92,6 +92,7 @@ def result(request):
 
     return redirect('/map')
 
+@login_required
 def confirm(request):
     if ('fee' in request.POST
         and 'start_date_time' in request.POST

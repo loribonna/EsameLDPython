@@ -24,6 +24,9 @@ class Driver(UserBase):
     class Meta:
         permissions = (('driver', 'DRIVER'),)
 
+    def idValid(self):
+        return not self.black_listed
+
     def isDBConsistent(self):
         return (self.max_distance != None 
             and self.rate_per_km != None 
