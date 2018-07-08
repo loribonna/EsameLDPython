@@ -1,23 +1,24 @@
 const travelAdminListItemComponent = {
-    //TODO;
     template: `<div style="display: flex;" class="list-group-item list-group-item-action">
-        <span style="flex: 1;">Posizione di partenza:<br/>{{getPositionFormatted(content.startPos)}}</span>
-        <span style="flex: 1;">Posizione di arrivo:<br/>{{getPositionFormatted(content.endPos)}}</span>
-        <span style="flex: 1;">Data/Ora inizio:<br/>{{formatDate(content.startDateTime)}}</span>
-        <ld-button v-if="content.refoundRequest" style="margin-right:5px" v-on:click="acceptRefound" btnType="warning">Accetta rimborso <span class="fa fa-recycle"></span></ld-button>
+        <span class="ld-admin-list-item">Posizione di partenza:<br/>{{getPositionFormatted(content.start_pos)}}</span>
+        <span class="ld-admin-list-item">Posizione di arrivo:<br/>{{getPositionFormatted(content.end_pos)}}</span>
+        <span class="ld-admin-list-item">Data/Ora inizio:<br/>{{formatDate(content.start_date_time)}}</span>
+        <span class="ld-admin-list-item">Cliente:<br>{{content.client}}</span>
+        <span class="ld-admin-list-item">Autista:<br>{{content.driver}}</span>
+        <ld-button v-if="content.refound_request=='1'" style="margin-right:5px" v-on:click="acceptRefound" btnType="warning">Accetta rimborso <span class="fa fa-recycle"></span></ld-button>
         <ld-button v-on:click="removeTravel" v-if="checkRemovable()" btnType="danger">X</ld-button>
-    </div>`,
+        </div>`,
     props: [
         'content'
     ],
-    mounted: function () { },
+    mounted: function () {},
     components: {
         'ld-button': buttonComponent
     },
     methods: {
         checkRemovable() {
-            if (this.content && this.content.startDateTime) {
-                const date = new Date(this.content.startDateTime);
+            if (this.content && this.content.start_date_time) {
+                const date = new Date(this.content.start_date_time);
                 return isValidDate(date) && checkDateDifference(date.getTime(), Date.now(), MAX_DATE_DIFF);
             }
             return false;
@@ -27,8 +28,8 @@ const travelAdminListItemComponent = {
             return isValidDate(date) ? formatDate(date) : ''
         },
         getPositionFormatted(pos) {
-            if (pos && pos.lat && pos.lng) {
-                return 'lat: ' + formatNum(pos.lat) + ', lng: ' + formatNum(pos.lng);
+            if (pos && pos[0] && pos[1]) {
+                return 'lat: ' + formatNum(pos[0]) + ', lng: ' + formatNum(pos[1]);
             } else {
                 return ''
             }
@@ -51,11 +52,12 @@ window.onload = function () {
         props: ['content'],
         components: {
             'ld-header': headerComponent,
-            'list-item': travelAdminListItemComponent
+            'list-item': travelAdminListItemComponent,
+            'ld-badge': badgeComponent
         },
         methods: {
             handleSubmit(event) {
-                location.href = 'administration?' + event.name + "=" + event.content;
+                location.href = 'administrator?' + event.name + "=" + event.content;
             }
         }
     })

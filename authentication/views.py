@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from clients.models import Client
+from authentication.models import UserBase
 from drivers.models import Driver
 from django.contrib.auth.models import Permission
 
@@ -45,6 +46,9 @@ def loginForm(request):
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
+            usr = UserBase.objects.get(pk=user.pk)
+            if usr.black_listed == True:
+                return render(request, 'login/login.html', context={'blacklisted': True})
             if user.is_active:
                 login(request, user)
                 if user.is_superuser:

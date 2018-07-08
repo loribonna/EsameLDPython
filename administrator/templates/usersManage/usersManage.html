@@ -11,9 +11,18 @@
 
 <div id="app">
     <ld-header action="/administrator" main_icon="plane" tooltip="Manage Travels"></ld-header>
-    {% for user in users %}
-        <list-item v-on:submit="handleSubmit" :content="{{user}}"></list-item>
-    {% endfor %}
+
+    <div>
+        {% for user in drivers %}
+            <list-item v-on:submit="handleSubmit" user_type="autista" :content="{{user}}"></list-item>
+        {% endfor %}
+    </div>
+    
+    <div>
+        {% for user in clients %}
+            <list-item v-on:submit="handleSubmit" user_type="cliente" :content="{{user}}"></list-item>
+        {% endfor %}
+    </div>
 </div>
 
 {%endblock%}

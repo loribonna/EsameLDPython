@@ -1,19 +1,70 @@
 from django.shortcuts import render
 from datetime import datetime
-# Create your views here.
+from travels.models import Travel
+from django.core.exceptions import ObjectDoesNotExist
+from drivers.models import Driver
+from clients.models import Client
 
+def reportUser(usertype, id):
+    try:
+        user = None
+        if usertype == 'autista':
+            user = Driver.objects.get(pk=id)
+        elif usertype == 'cliente':
+            user = Client.objects.get(pk=id)
+        else:
+            return
+        user.reportes += 1
+        user.save()
+    except ObjectDoesNotExist:
+        print('User deleted error')
+    
+def blackListUser(usertype, id):
+    try:
+        user = None
+        if usertype == 'autista':
+            user = Driver.objects.get(pk=id)
+        elif usertype == 'cliente':
+            user = Client.objects.get(pk=id)
+        else:
+            return
+        user.black_listed=True
+        user.save()
+    except ObjectDoesNotExist:
+        print('User deleted error')
 
 def adminTravelsPage(request):
-    context = {'travels': [
-        {'startPos': {'lat': 42, 'lng': 12}, 'refoundRequest': 1, 'endPos': {'lat': 42, 'lng': 32},
-            'cost': 12, 'startDateTime': datetime.now().isoformat()},
-        {'startPos': {'lat': 42}, 'refoundRequest': 0, 'endPos': {'lat': 'a', 'lng': 32},
-            'cost': 32, 'startDateTime': datetime.now().isoformat()}
-    ]}
+    if 'acceptRef' in request.GET:
+        try:
+            travel = Travel.objects.get(pk=request.GET['acceptRef'])
+            travel.accpetRefRequest()
+        except ObjectDoesNotExist:
+            print('Travel deleted error')
+    if 'removeTravel' in request.GET:
+        try:
+            Travel.objects.get(pk=request.GET['removeTravel']).delete()
+        except ObjectDoesNotExist:
+            print('Travel deleted error')
+    travels = Travel.objects.filter(refound_request=True)
+    context = {
+        'travels': [t.getTravelDict() for t in travels]
+    }
     return render(request, 'administrator/administrator.html', context=context)
 
 def adminUsersPage(request):
-    context = {'users': [
-        {'name': 'a1', 'id': 'asgkbjd'}
-        ]}
+    #TODO: verify
+    if 'user_type' in request.GET:
+        usertype=request.GET['user_type']
+        if 'blackListUser' in request.GET:
+            blackListUser(usertype, int(request.GET['blackListUser']))
+
+        if 'reportUser' in request.GET:
+            reportUser(usertype, int(request.GET['reportUser']))
+    
+    drivers = Driver.objects.all()
+    clients = Client.objects.all()
+    context = {
+        'drivers': [d.getDriverDict() for d in drivers],
+        'clients': [c.getClientDict() for c in clients]
+    }
     return render(request, 'usersManage/usersManage.html', context=context)

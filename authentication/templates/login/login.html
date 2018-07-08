@@ -18,7 +18,10 @@
     {% endif %}
     {% if inactive %}
     <ld-badge style="background-color: red; color: white; display: block">Utente Inattivo</ld-badge>
-    {%endif%}
+    {% endif %}
+    {% if blacklisted %}
+    <ld-badge style="background-color: red; color: white; display: block">Utente in BlackList</ld-badge>
+    {% endif %}
     <div class="ld_form">
         <ld-badge style="display: block">Login</ld-badge>
         <form method="POST" @submit="handleLogin">

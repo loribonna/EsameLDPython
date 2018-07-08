@@ -11,6 +11,9 @@
 
 <div id="app">
     <ld-header action="/administrator/users" main_icon="users" tooltip="Manage Users"></ld-header>
+    {% if not travels %}
+        <ld-badge>Nessuna richiesta di rimborso disponibile</ld-badge>
+    {%endif%}
     {% for travel in travels %}
         <list-item v-on:submit="handleSubmit" :content="{{travel}}"></list-item>
     {% endfor %}

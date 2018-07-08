@@ -35,6 +35,7 @@ class Driver(UserBase):
     def getDriverDict(self):
         ret = {
             'user': getFieldIfExists(self.username),
+            'id': self.pk,
             'info': getFieldIfExists(self.info),
             'rate_per_km': getFieldIfExists(self.rate_per_km),
             'common_start_pos': {
@@ -43,6 +44,8 @@ class Driver(UserBase):
             },
             'max_distance': getFieldIfExists(self.max_distance),
             'start_time': '',
+            'reports': getFieldIfExists(self.reportes),
+            'black_listed': 1 if self.black_listed else 0,
             'duration': '',
             'db_consistent': 1 if self.isDBConsistent() else 0
         }

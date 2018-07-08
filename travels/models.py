@@ -17,11 +17,17 @@ class Travel(models.Model):
     end_pos=models.ForeignKey(PosLatLng, on_delete=models.CASCADE, related_name='endPos')
     refound_request=models.BooleanField(default=False)
 
+    def accpetRefRequest(self):
+        self.refound_request = False
+        self.save()
+        print('MOCK')
+
     def getTravelDict(self):
         if self.driver != None:
             return {
                 'fee': self.fee,
                 'driver': self.driver.username,
+                'client': self.client.username,
                 'start_date_time': self.getStartDate(),
                 'end_date_time': self.getEndDate(),
                 'start_pos': self.getStartLatLng(),
