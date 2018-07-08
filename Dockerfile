@@ -10,6 +10,7 @@ RUN python3 -m pip install -r requirements.txt
 RUN mkdir /code
 WORKDIR /app
 # Adding static dirs and files
+ADD docker-startup.sh /app
 ADD manage.py /app
 ADD EsameLD /app/EsameLD
 ADD templates /app/templates
