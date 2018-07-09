@@ -25,6 +25,9 @@ Sia gli utenti di tipo `cliente` che di tipo `autista` necessitano di registrazi
 
 ### Tramite docker-compose
 
+Il software Docker è disponibile tramite [questo link](https://docs.docker.com/install/).  
+Assicurarsi che anche il tool [docker-compose](https://docs.docker.com/compose/install/) sia installato e funzionante.
+
 Assicurarsi che Docker sia in esecuzione e inserire il comando: `docker-compose -f docker-compose.yml up -d --build`.
 
 Verranno scaricati i requisiti necessari e avviato l'applicativo in ascolto sulla porta `8000`.
