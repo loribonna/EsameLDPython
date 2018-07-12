@@ -37,7 +37,8 @@ Verranno scaricati i requisiti necessari e avviato l'applicativo in ascolto sull
 L'installazione manuale dell'applicazione richiede l'installazione delle dependency del progetto:
 - **MongoDB** (3.6.4),
 - **NodeJS** (8.9.1) e l'interprete **Typescript** (2.8.3), disponibile via **npm** (5.5.1),
-- interprete **python** (3.6.5) e il framework **django** (2.0.5).
+- interprete **python** (3.6.5) e il framework **django** (2.0.5),
+- **djongo** (1.2.27), disponibile tramite **pip**.
 
 1. Il software utilizza **MongoDB** come Database.
 
@@ -54,7 +55,7 @@ L'installazione manuale dell'applicazione richiede l'installazione delle depende
 
     Npm è disponibile, unitamente a Node, via package manager su linux seguendo [queste istruzioni](https://nodejs.org/en/download/package-manager/).
 
-3. Installare l'interprete **python** e il framework **django**
+3. Installare l'interprete **python** e il framework **django**. Installare l'engine **djongo** tramite il comando `pip install djongo`.
 
 Per avviare l'applicazione, assicurarsi che il demone di MongoDB sia in esecuzione ed eseguire:
 

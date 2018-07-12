@@ -7,34 +7,48 @@ from clients.models import Client
 from drivers.models import Driver
 from django.core.exceptions import ObjectDoesNotExist
 
+
+def sendTravelList(request, error=None):
+    client = Client.objects.get(username=request.user)
+    travels = Travel.objects.filter(client=client)
+    context = {
+        'travels': [t.getTravelDict() for t in travels],
+        'error': error
+    }
+    return render(request, 'clients/clients.html', context=context)
+
+
 @login_required
 def travelsList(request):
-    #TODO: verify
     if 'refundReq' in request.GET:
         try:
-            travel=Travel.objects.get(pk=request.GET['refundReq'])
-            travel.refound_request=True
+            travel = Travel.objects.get(pk=request.GET['refundReq'])
+
+            if travel.client.username != request.user.username:
+                return sendTravelList(request, error='Permission Error')
+            travel.refound_request = True
             travel.save()
         except ObjectDoesNotExist:
-            print('Travel deleted error')
+            return sendTravelList(request, error='Travel not exists')
 
     if 'reportDriver' in request.GET:
         try:
-            travel=Travel.objects.get(pk=request.GET['reportDriver'])
-            driver=Driver.objects.get(pk=travel.driver.pk)
+            travel = Travel.objects.get(pk=request.GET['reportDriver'])
+            if travel.client.username != request.user.username:
+                return sendTravelList(request, error='Permission Error')
+            driver = Driver.objects.get(pk=travel.driver.pk)
             driver.reports += 1
             driver.save()
         except ObjectDoesNotExist:
-            print('Travel deleted error')
+            return sendTravelList(request, error='Travel not exists')
     if 'removeTravel' in request.GET:
         try:
-            travel=Travel.objects.get(pk=request.GET['removeTravel']).delete()
+            travel = Travel.objects.get(pk=request.GET['removeTravel'])
+            if not travel.isRemovable() or travel.client.username != request.user.username:
+                return sendTravelList(request, error='Permission Error')
+            travel.delete()
+            
         except ObjectDoesNotExist:
-            print('Travel double delete error')
+            return sendTravelList(request, error='Travel not exists')
 
-    client=Client.objects.get(username = request.user)
-    travels=Travel.objects.filter(client=client)
-    context = {
-        'travels': [t.getTravelDict() for t in travels]
-    }
-    return render(request, 'clients/clients.html', context=context)
+    return sendTravelList(request)

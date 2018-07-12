@@ -6,6 +6,7 @@ var travelClientListItemComponent = {
     components: {
         'ld-button': buttonComponent
     },
+    mounted: function () { },
     methods: {
         checkRefRequest: function () {
             return this.content.refound_request == '1';
@@ -14,7 +15,7 @@ var travelClientListItemComponent = {
         checkRemovable: function () {
             if (this.content && this.content.start_date_time) {
                 var date = new Date(this.content.start_date_time);
-                return isValidDate(date) && checkDateDifference(date.getTime(), Date.now(), MAX_DATE_DIFF);
+                return isValidDate(date) && checkDateDifference(Date.now(), date.getTime(), MAX_DATE_DIFF);
             }
             return false;
         },
@@ -49,7 +50,8 @@ window.onload = function () {
         el: '#app',
         components: {
             'list-item': travelClientListItemComponent,
-            'ld-header': headerComponent
+            'ld-header': headerComponent,
+            'ld-badge': badgeComponent
         },
         methods: {
             handleSubmit: function (event) {

@@ -10,8 +10,14 @@ var formatDate = function (d) {
 var isValidDate = function (d) {
     return d && d instanceof Date && !isNaN(d.getTime());
 };
-var checkDateDifference = function (d1, d2, maxDiff) {
-    return (d2 - d1) <= maxDiff;
+var abs = function (n) {
+    return n > 0 ? n : -n;
+};
+var checkDateDifference = function (start, end, maxDiff) {
+    if (!maxDiff) {
+        return start - end > 0;
+    }
+    return maxDiff <= end - start;
 };
 var buildQuery = function (obj) {
     var query = [];

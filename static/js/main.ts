@@ -14,14 +14,21 @@ const isValidDate = (d) => {
     return d && d instanceof Date && !isNaN(d.getTime());
 }
 
-const checkDateDifference = (d1, d2, maxDiff) => {
-    return (d2 - d1) <= maxDiff;
+const abs = (n) => {
+    return n > 0 ? n : -n;
+}
+
+const checkDateDifference = (start, end, maxDiff?) => {
+    if (!maxDiff) {
+        return start - end > 0
+    }
+    return maxDiff <= end - start;
 }
 
 const buildQuery = (obj): string[] => {
     let query = [];
-    for(const prop in obj) {
-        if(typeof obj[prop] === "string" || typeof obj[prop] === "number") {
+    for (const prop in obj) {
+        if (typeof obj[prop] === "string" || typeof obj[prop] === "number") {
             query.push(prop + "=" + obj[prop]);
         } else if (typeof obj[prop] === "object" && !Array.isArray(obj[prop])) {
             query.push(...buildQuery(obj[prop]).map(q => prop + "." + q));

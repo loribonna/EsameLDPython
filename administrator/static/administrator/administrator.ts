@@ -19,7 +19,7 @@ const travelAdminListItemComponent = {
         checkRemovable() {
             if (this.content && this.content.start_date_time) {
                 const date = new Date(this.content.start_date_time);
-                return isValidDate(date) && checkDateDifference(date.getTime(), Date.now(), MAX_DATE_DIFF);
+                return isValidDate(date) && checkDateDifference(Date.now(), date.getTime(), MAX_DATE_DIFF);
             }
             return false;
         },

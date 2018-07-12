@@ -17,15 +17,16 @@ const travelClientListItemComponent = {
     components: {
         'ld-button': buttonComponent
     },
+    mounted: function () { },
     methods: {
-        checkRefRequest(){
+        checkRefRequest() {
             return this.content.refound_request == '1'
         },
         formatNum(n) { return formatNum(n) },
         checkRemovable() {
             if (this.content && this.content.start_date_time) {
                 const date = new Date(this.content.start_date_time);
-                return isValidDate(date) && checkDateDifference(date.getTime(), Date.now(), MAX_DATE_DIFF);
+                return isValidDate(date) && checkDateDifference(Date.now(), date.getTime(), MAX_DATE_DIFF);
             }
             return false;
         },
@@ -48,7 +49,7 @@ const travelClientListItemComponent = {
         },
         removeTravel() {
             if (this.checkRemovable()) {
-                this.$emit('submit', { name:'removeTravel', content: this.content.id });
+                this.$emit('submit', { name: 'removeTravel', content: this.content.id });
             }
         }
 
@@ -61,7 +62,8 @@ window.onload = function () {
         el: '#app',
         components: {
             'list-item': travelClientListItemComponent,
-            'ld-header': headerComponent
+            'ld-header': headerComponent,
+            'ld-badge': badgeComponent
         },
         methods: {
             handleSubmit(event) {

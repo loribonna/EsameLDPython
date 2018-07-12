@@ -11,6 +11,12 @@
 
 <div id="app">
     <ld-header action="/map" main_icon="map" tooltip="Return MAP"></ld-header>
+        {% if error %}
+        <ld-badge style="display: block; padding: 5px; background-color: red; color: yellow; text-align: center">
+            Errore: {{error}}
+        </ld-badge>
+        {% endif %}
+
         {% for travel in travels %}
             <list-item v-on:submit="handleSubmit" :content="{{travel}}"></list-item>
         {% endfor %}

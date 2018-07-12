@@ -24,7 +24,7 @@ class Driver(UserBase):
     class Meta:
         permissions = (('driver', 'DRIVER'),)
 
-    def idValid(self):
+    def isValid(self):
         return not self.black_listed
 
     def isDBConsistent(self):
