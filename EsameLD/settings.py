@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'EsameLD.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'django_ld_esame',
+        'NAME': 'django_db',
         'PORT': 27017,
         'HOST': os.environ.get('MONGO_URI', default='')
     }

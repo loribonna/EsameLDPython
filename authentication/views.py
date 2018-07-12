@@ -7,11 +7,12 @@ from authentication.models import UserBase
 from drivers.models import Driver
 from django.contrib.auth.models import Permission
 
+
 def registerForm(request):
     if 'username' in request.POST and 'password' in request.POST:
         username = request.POST['username']
         password = request.POST['password']
-        
+
         if 'driver_enable' in request.POST:
             if Driver.objects.filter(username=username).exists():
                 return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
@@ -57,7 +58,7 @@ def loginForm(request):
             else:
                 return render(request, 'login/login.html', context={'inactive': True})
         else:
-            return render(request, 'login/login.html', context={'user_data': {'user': username,'pass': password}})
+            return render(request, 'login/login.html', context={'user_data': {'user': username, 'pass': password}})
     return render(request, 'login/login.html')
 
 
