@@ -18,8 +18,6 @@ def getInt(strng):
 
 # Distance in Kilometers from
 # https://andrew.hedges.name/experiments/haversine/
-
-
 def calcDistance(startPos, endPos):
     # approximate radius of earth in km
     R = 6373.0
