@@ -1,5 +1,5 @@
 var usersListItemComponent = {
-    template: "<div style=\"display: flex;\" class=\"list-group-item list-group-item-action\">\n        <div style=\"display:flex; flex:1\"><ld-badge color=\"info\">{{getUserTypeFormatted()}}</ld-badge></div>\n        <span style=\"flex: 1;\">Nome:<br/>{{content.user}}</span>\n        <span style=\"flex: 1;\">ID:<br/>{{content.id}}</span>\n        <span style=\"flex: 1;\">Segnalazioni:<br/>{{content.reports}}</span>\n        <div v-if=\"isBlackListed()\" style=\"display:flex; flex:1\"><ld-badge color=\"info\">BlackListed</ld-badge></div>\n        <ld-button style=\"margin-right:5px\" v-on:click=\"reportUser\" btnType=\"warning\">Segnala Utente <span class=\"fa fa-frown-o\"></span></ld-button>\n        <ld-button v-if=\"!isBlackListed()\" style=\"margin-right:5px\" v-on:click=\"blackListUser\" btnType=\"danger\">Black-List <span class=\"fa fa-ban\"></span></ld-button>\n    </div>",
+    template: "<div style=\"display: flex;\" class=\"list-group-item list-group-item-action\">\n        <div style=\"display:flex; flex:1\"><ld-badge color=\"info\">{{getUserTypeFormatted()}}</ld-badge></div>\n        <span style=\"flex: 1;\">Nome:<br/>{{content.user}}</span>\n        <span style=\"flex: 1;\">ID:<br/>{{content.id}}</span>\n        <span style=\"flex: 1;\">Segnalazioni:<br/>{{content.reports}}</span>\n        <div v-if=\"isBlackListed()\" style=\"display:flex; flex:1\"><ld-badge color=\"info\">Utente in Black-List</ld-badge></div>\n        <ld-button style=\"margin-right:5px\" v-on:click=\"reportUser\" btnType=\"warning\">Segnala Utente <span class=\"fa fa-frown-o\"></span></ld-button>\n        <ld-button v-if=\"!isBlackListed()\" style=\"margin-right:5px\" v-on:click=\"blackListUser\" btnType=\"danger\">Black-List <span class=\"fa fa-ban\"></span></ld-button>\n        <ld-button v-if=\"isBlackListed()\" style=\"margin-right:5px\" v-on:click=\"unBlackListUser\" btnType=\"danger\">Rimuovi dalla Black-List <span class=\"fa fa-ban\"></span></ld-button>\n    </div>",
     props: [
         'content', 'user_type'
     ],
@@ -19,6 +19,11 @@ var usersListItemComponent = {
         reportUser: function () {
             if (this.user_type) {
                 this.$emit('submit', [{ name: 'reportUser', content: this.content.id }, { name: 'user_type', content: this.user_type }]);
+            }
+        },
+        unBlackListUser: function () {
+            if (this.user_type) {
+                this.$emit('submit', [{ name: 'unBlackListUser', content: this.content.id }, { name: 'user_type', content: this.user_type }]);
             }
         },
         blackListUser: function () {

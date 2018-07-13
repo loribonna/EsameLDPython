@@ -4,9 +4,10 @@ const usersListItemComponent = {
         <span style="flex: 1;">Nome:<br/>{{content.user}}</span>
         <span style="flex: 1;">ID:<br/>{{content.id}}</span>
         <span style="flex: 1;">Segnalazioni:<br/>{{content.reports}}</span>
-        <div v-if="isBlackListed()" style="display:flex; flex:1"><ld-badge color="info">BlackListed</ld-badge></div>
+        <div v-if="isBlackListed()" style="display:flex; flex:1"><ld-badge color="info">Utente in Black-List</ld-badge></div>
         <ld-button style="margin-right:5px" v-on:click="reportUser" btnType="warning">Segnala Utente <span class="fa fa-frown-o"></span></ld-button>
         <ld-button v-if="!isBlackListed()" style="margin-right:5px" v-on:click="blackListUser" btnType="danger">Black-List <span class="fa fa-ban"></span></ld-button>
+        <ld-button v-if="isBlackListed()" style="margin-right:5px" v-on:click="unBlackListUser" btnType="danger">Rimuovi dalla Black-List <span class="fa fa-ban"></span></ld-button>
     </div>`,
     props: [
         'content', 'user_type'
@@ -27,6 +28,11 @@ const usersListItemComponent = {
         reportUser() {
             if (this.user_type) {
                 this.$emit('submit', [{ name: 'reportUser', content: this.content.id }, { name: 'user_type', content: this.user_type }]);
+            }
+        },
+        unBlackListUser() {
+            if (this.user_type) {
+                this.$emit('submit', [{ name: 'unBlackListUser', content: this.content.id }, { name: 'user_type', content: this.user_type }]);
             }
         },
         blackListUser() {

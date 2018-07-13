@@ -19,8 +19,8 @@ def reportUser(usertype, id):
         user.save()
     except ObjectDoesNotExist:
         print('User deleted error')
-    
-def blackListUser(usertype, id):
+
+def blackListUser(usertype, id, blacklist_enable=True):
     try:
         user = None
         if usertype == 'autista':
@@ -29,7 +29,7 @@ def blackListUser(usertype, id):
             user = Client.objects.get(pk=id)
         else:
             return
-        user.black_listed=True
+        user.black_listed=blacklist_enable
         user.save()
     except ObjectDoesNotExist:
         print('User deleted error')
@@ -66,6 +66,9 @@ def adminUsersPage(request):
         usertype=request.GET['user_type']
         if 'blackListUser' in request.GET:
             blackListUser(usertype, int(request.GET['blackListUser']))
+        
+        if 'unBlackListUser' in request.GET:
+            blackListUser(usertype, int(request.GET['unBlackListUser']), False)
 
         if 'reportUser' in request.GET:
             reportUser(usertype, int(request.GET['reportUser']))
