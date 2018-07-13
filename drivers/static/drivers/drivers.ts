@@ -31,7 +31,7 @@ const travelDriverListItemComponent = {
         checkPending() {
             if (this.content && this.content.start_date_time) {
                 const date = new Date(this.content.start_date_time);
-                return isValidDate(date) && checkDateDifference(Date.now(), date.getTime());
+                return isValidDate(date) && checkDateDifference(date.getTime(), Date.now());
             }
             return false;
         }

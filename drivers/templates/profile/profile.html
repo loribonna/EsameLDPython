@@ -18,11 +18,10 @@
     <form method="POST" @submit="handleSave">
         {% csrf_token %}
         <div class="ld-driver-profile-row">
-            <text-input class="ld-driver-profile-cell" name="name" placeholder="Nome" v-model="profile.user" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
             <text-input class="ld-driver-profile-cell" name="info" placeholder="Info" v-model="profile.info" v-on:valid="validCheck" :enable_error="enable_error"></text-input>
+            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="rate_per_km" placeholder="Tariffa al KM (€)" v-model="profile.rate_per_km" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>        
         </div>
         <div class="ld-driver-profile-row">
-            <text-input validator="numberValidator" class="ld-driver-profile-cell" name="rate_per_km" placeholder="Tariffa al KM (€)" v-model="profile.rate_per_km" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>        
             <text-input validator="numberValidator" class="ld-driver-profile-cell" name="common_start_pos.lat" placeholder="Latitudine comune" v-model="profile.common_start_pos.lat" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
             <text-input validator="numberValidator" class="ld-driver-profile-cell" name="common_start_pos.lng" placeholder="Longitudine comune" v-model="profile.common_start_pos.lng" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
         </div>

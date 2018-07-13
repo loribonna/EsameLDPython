@@ -29,7 +29,6 @@ window.onload = function () {
                 db_consistent: false,
                 enable_error: false,
                 profile: {
-                    user: null,
                     info: null,
                     rate_per_km: null,
                     common_start_pos: {

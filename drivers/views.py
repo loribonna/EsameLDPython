@@ -26,8 +26,7 @@ def travelsList(request):
 def driverProfile(request):
     driver = Driver.objects.get(username=request.user)
 
-    if ('name' in request.POST
-        and 'rate_per_km' in request.POST
+    if ('rate_per_km' in request.POST
         and 'common_start_pos.lat' in request.POST
         and 'common_start_pos.lng' in request.POST
         and 'max_distance' in request.POST
@@ -45,7 +44,6 @@ def driverProfile(request):
         )
         time_avail.save()
         driver.rate_per_km=request.POST['rate_per_km']
-        driver.name=request.POST['name']
         driver.info=request.POST['info']
         driver.common_start_pos=pos
         driver.max_distance=request.POST['max_distance']
