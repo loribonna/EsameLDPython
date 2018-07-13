@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from clients.models import Client
 from authentication.models import UserBase
 from drivers.models import Driver
+from django.contrib.auth.models import User
 from django.contrib.auth.models import Permission
 
 
@@ -17,7 +17,7 @@ def registerForm(request):
         password = request.POST['password']
 
         if 'driver_enable' in request.POST:
-            if Driver.objects.filter(username=username).exists():
+            if User.objects.filter(username=username).exists():
                 return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
             user = Driver.objects.create_user(
                 username=username, password=password
@@ -28,7 +28,7 @@ def registerForm(request):
             login(request, user)
             return redirect('/drivers/profile')
         else:
-            if Client.objects.filter(username=username).exists():
+            if User.objects.filter(username=username).exists():
                 return render(request, 'register/register.html', context={'user_exists': True, 'user_data': {'user': username}})
             user = Client.objects.create_user(
                 username=username, password=password
