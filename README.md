@@ -23,13 +23,6 @@ Sia gli utenti di tipo `cliente` che di tipo `autista` necessitano di registrazi
 
 ## Installazione e avvio
 
-Il file `dump_mongo.tgz` contiene un dump del Database usato in fase di sviluppo/debug con qualche utente di prova e un utente di tipo superuser.
-Per caricare il file di dump è necessario:
-- Scompattare l'archivio tramite il comando `tar xzvf ./dump_mongo.tgz`. È necessario trovarsi nella stessa directory del file.
-- Portarsi all'interno della cartella scompattata.
-- Assicurandosi che il demone di mongodb (**mongod**) sia in esecuzione, caricare i file di dump tramite il comando `mongorestore --db django_db django_db`.
-In caso di successo, l'ultimo messaggio dovrebbe essere *done*.
-
 ### Tramite docker-compose
 
 Il software Docker è disponibile tramite [questo link](https://docs.docker.com/install/).  
@@ -75,3 +68,13 @@ Per avviare l'applicazione, assicurarsi che il demone di MongoDB sia in esecuzio
 - Avvio del server: `python ./manage.py runserver 0.0.0.0:8000`
 
 - Se npm è installato tramite il *punto 2 (opzionale)*, eseguire `npm start` per avviare l'applicativo. 
+
+## Caricamento dump di memoria per testing e sviluppo
+
+Il file `dump_mongo.tgz` contiene un dump del Database usato in fase di sviluppo/debug con qualche utente di prova e un utente di tipo superuser.
+Per caricare il file di dump è necessario:
+- Scompattare l'archivio tramite il comando `tar xzvf ./dump_mongo.tgz`. È necessario trovarsi nella stessa directory del file.
+- Portarsi all'interno della cartella scompattata.
+- Assicurandosi che il demone di mongodb (**mongod**) sia in esecuzione, caricare i file di dump tramite il comando `mongorestore --db django_db django_db`.
+
+In caso di successo, l'ultimo messaggio dovrebbe essere *done*.
