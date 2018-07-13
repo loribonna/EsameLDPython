@@ -55,7 +55,7 @@ def adminTravelsPage(request):
             print('Travel deleted error')
     if 'denyRef' in request.GET:
         try:
-            travel = Travel.objects.get(pk=request.GET['acceptRef'])
+            travel = Travel.objects.get(pk=request.GET['denyRef'])
             travel.denyRefRequest()
         except ObjectDoesNotExist:
             print('Travel deleted error')
