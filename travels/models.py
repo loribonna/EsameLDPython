@@ -18,6 +18,15 @@ class Travel(models.Model):
     end_pos = models.ForeignKey(
         PosLatLng, on_delete=models.CASCADE, related_name='endPos')
     refound_request = models.BooleanField(default=False)
+    driver_reported = models.BooleanField(default=False)
+
+    def reportDriver(self):
+        if not self.driver_reported:
+            self.driver_reported = True
+            self.driver.reportes += 1
+            self.save()
+            return True
+        return False
 
     def accpetRefRequest(self):
         self.refound_request = False
@@ -39,9 +48,15 @@ class Travel(models.Model):
                 'start_pos': self.getStartLatLng(),
                 'end_pos': self.getEndLatLng(),
                 'refound_request': self.getRefReq(),
-                'id': self.pk
+                'id': self.pk,
+                'driver_reported': self.getDriverReported()
             }
         return {}
+
+    def getDriverReported(self):
+        if self.driver_reported == True:
+            return 1
+        return 0
 
     def getStartLatLng(self):
         if self.start_pos and self.start_pos.lat and self.start_pos.lng:

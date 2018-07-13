@@ -1,5 +1,5 @@
 var travelClientListItemComponent = {
-    template: "<div style=\"display: flex;\" class=\"list-group-item list-group-item-action\">\n        <span class=\"ld-client-list-item\">Posizione di partenza:<br/>{{getPositionFormatted(content.start_pos)}}</span>\n        <span class=\"ld-client-list-item\">Posizione di arrivo:<br/>{{getPositionFormatted(content.end_pos)}}</span>\n        <span class=\"ld-client-list-item\">Data/Ora inizio:<br/>{{formatDate(content.start_date_time)}}</span>\n        <span class=\"ld-client-list-item\">Costo:<br>{{formatNum(content.fee)}} \u20AC</span>\n        <span class=\"ld-client-list-item\">Autista:<br>{{content.driver}}</span>\n        <ld-button :disabled=\"checkRefRequest()\" style=\"margin-right:5px\" v-on:click=\"askRefund\" btnType=\"warning\">Richiedi rimborso <span class=\"fa fa-recycle\"></span></ld-button>\n        <ld-button tooltip=\"Report Driver\" style=\"margin-right:5px\" v-on:click=\"reportDriver\" btnType=\"warning\"><span class=\"fa fa-frown-o\"></span></ld-button>\n        <ld-button v-on:click=\"removeTravel\" v-if=\"checkRemovable()\" btnType=\"danger\">X</ld-button>\n    </div>",
+    template: "<div style=\"display: flex;\" class=\"list-group-item list-group-item-action\">\n        <span class=\"ld-client-list-item\">Posizione di partenza:<br/>{{getPositionFormatted(content.start_pos)}}</span>\n        <span class=\"ld-client-list-item\">Posizione di arrivo:<br/>{{getPositionFormatted(content.end_pos)}}</span>\n        <span class=\"ld-client-list-item\">Data/Ora inizio:<br/>{{formatDate(content.start_date_time)}}</span>\n        <span class=\"ld-client-list-item\">Costo:<br>{{formatNum(content.fee)}} \u20AC</span>\n        <span class=\"ld-client-list-item\">Autista:<br>{{content.driver}}</span>\n        <ld-button :disabled=\"checkRefRequest()\" style=\"margin-right:5px\" v-on:click=\"askRefund\" btnType=\"warning\">Richiedi rimborso <span class=\"fa fa-recycle\"></span></ld-button>\n        <ld-button :disabled=\"checkDriverReported()\" tooltip=\"Report Driver\" style=\"margin-right:5px\" v-on:click=\"reportDriver\" btnType=\"warning\"><span class=\"fa fa-frown-o\"></span></ld-button>\n        <ld-button v-on:click=\"removeTravel\" v-if=\"checkRemovable()\" btnType=\"danger\">X</ld-button>\n    </div>",
     props: [
         'content'
     ],
@@ -8,6 +8,9 @@ var travelClientListItemComponent = {
     },
     mounted: function () { },
     methods: {
+        checkDriverReported: function () {
+            return this.content.driver_reported == '1';
+        },
         checkRefRequest: function () {
             return this.content.refound_request == '1';
         },

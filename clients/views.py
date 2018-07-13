@@ -42,9 +42,9 @@ def travelsList(request):
             travel = Travel.objects.get(pk=request.GET['reportDriver'])
             if travel.client.username != request.user.username:
                 return sendTravelList(request, error='Permission Error')
-            driver = Driver.objects.get(pk=travel.driver.pk)
-            driver.reports += 1
-            driver.save()
+            status = travel.reportDriver()
+            if not status:
+                return sendTravelList(request, error="Double report error")
         except ObjectDoesNotExist:
             return sendTravelList(request, error='Travel not exists')
     if 'removeTravel' in request.GET:

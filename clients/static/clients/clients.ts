@@ -8,7 +8,7 @@ const travelClientListItemComponent = {
         <span class="ld-client-list-item">Costo:<br>{{formatNum(content.fee)}} €</span>
         <span class="ld-client-list-item">Autista:<br>{{content.driver}}</span>
         <ld-button :disabled="checkRefRequest()" style="margin-right:5px" v-on:click="askRefund" btnType="warning">Richiedi rimborso <span class="fa fa-recycle"></span></ld-button>
-        <ld-button tooltip="Report Driver" style="margin-right:5px" v-on:click="reportDriver" btnType="warning"><span class="fa fa-frown-o"></span></ld-button>
+        <ld-button :disabled="checkDriverReported()" tooltip="Report Driver" style="margin-right:5px" v-on:click="reportDriver" btnType="warning"><span class="fa fa-frown-o"></span></ld-button>
         <ld-button v-on:click="removeTravel" v-if="checkRemovable()" btnType="danger">X</ld-button>
     </div>`,
     props: [
@@ -17,8 +17,11 @@ const travelClientListItemComponent = {
     components: {
         'ld-button': buttonComponent
     },
-    mounted: function () { },
+    mounted: function () {},
     methods: {
+        checkDriverReported() {
+            return this.content.driver_reported == '1'
+        },
         checkRefRequest() {
             return this.content.refound_request == '1'
         },
