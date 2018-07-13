@@ -44,7 +44,8 @@ window.onload = function () {
         el: '#app',
         components: {
             'list-item': travelDriverListItemComponent,
-            'ld-header': headerComponent
+            'ld-header': headerComponent,
+            'ld-badge': badgeComponent
         }
     })
 }

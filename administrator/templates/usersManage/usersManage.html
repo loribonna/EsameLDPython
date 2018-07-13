@@ -12,6 +12,10 @@
 <div id="app">
     <ld-header action="/administrator" main_icon="plane" tooltip="Manage Travels"></ld-header>
 
+    {% if not drivers and not clients %}
+        <ld-badge>Nessuna utente disponibile</ld-badge>
+    {%endif%}
+
     <div>
         {% for user in drivers %}
             <list-item v-on:submit="handleSubmit" user_type="autista" :content="{{user}}"></list-item>

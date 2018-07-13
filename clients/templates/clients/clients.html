@@ -17,6 +17,10 @@
         </ld-badge>
         {% endif %}
 
+        {% if not travels %}
+            <ld-badge>Nessun viaggio prenotato o effettuato</ld-badge>
+        {%endif%}
+
         {% for travel in travels %}
             <list-item v-on:submit="handleSubmit" :content="{{travel}}"></list-item>
         {% endfor %}

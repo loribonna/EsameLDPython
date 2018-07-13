@@ -21,7 +21,7 @@
     <ld-badge style="background-color: red; color: white; display: block">Utente Già Esistente</ld-badge>
     {%endif%}
     <div class="ld_form">
-        <ld-badge style="display: block">Registrati</ld-badge>
+        <h2 style="display: block">Registrati</h2>
 
         <form method="POST" @submit="handleSubmit" action='/auth/signup'>
             {% csrf_token %}

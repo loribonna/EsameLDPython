@@ -23,6 +23,9 @@
             <br/> Partenza alle: [[this.$route.query.sTime]] del giorno: [[this.$route.query.sDay]]
         </ld-badge>
     </div>
+    {% if not results %}
+        <ld-badge>Nessun viaggio disponibile per la tratta richiesta</ld-badge>
+    {%endif%}
     {% for result in results %}
         <result-item v-on:submit="handleSubmit" :content="{{result}}"></result-item>
     {% endfor %}

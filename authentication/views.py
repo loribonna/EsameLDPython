@@ -25,6 +25,7 @@ def registerForm(request):
             permission = Permission.objects.get(name='DRIVER')
             user.user_permissions.add(permission)
             user.save()
+            login(request, user)
             return redirect('/drivers/profile')
         else:
             if Client.objects.filter(username=username).exists():
@@ -35,6 +36,7 @@ def registerForm(request):
             permission = Permission.objects.get(name='CLIENT')
             user.user_permissions.add(permission)
             user.save()
+            login(request, user)
             return redirect('/map')
 
     return render(request, 'register/register.html')

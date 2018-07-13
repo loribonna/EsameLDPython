@@ -11,6 +11,9 @@
 
 <div id="app">
     <ld-header action="/drivers/profile" main_icon="user" tooltip="View Profile"></ld-header>
+    {% if not travels %}
+        <ld-badge>Nessun viaggio prenotato o effettuato</ld-badge>
+    {%endif%}
     {% for travel in travels %}
         <list-item :content="{{travel}}"></list-item>
     {% endfor %}
