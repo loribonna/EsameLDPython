@@ -13,6 +13,19 @@ var isValidDate = function (d) {
 var abs = function (n) {
     return n > 0 ? n : -n;
 };
+var getDate = function (day, time) {
+    if (!day || !time) {
+        return null;
+    }
+    var dayParts = day.split('/');
+    var timeParts = time.split(':');
+    if (dayParts.length == 3 && timeParts.length == 2) {
+        var year = dayParts[2].length == 2 ? 2000 + Number(dayParts[2]) : Number(dayParts[2]);
+        var retDate = new Date(year, Number(dayParts[1]), Number(dayParts[0]), Number(timeParts[1]), Number(timeParts[0]));
+        return !isNaN(retDate.getTime()) ? retDate : null;
+    }
+    return null;
+};
 var checkDateDifference = function (start, end, maxDiff) {
     if (!maxDiff) {
         return start - end > 0;

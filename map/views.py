@@ -48,21 +48,19 @@ def checkInnerPos(centerLat, centerLng, filterLat, filterLng, filterRange):
 
 
 def checkValidDriver(driver, startPos, endPos, sTime):
-    if driver.isDBConsistent():
-        return driver.isValid() and checkInnerPos(
-            centerLat=driver.common_start_pos_lat,
-            centerLng=driver.common_start_pos_lng,
-            filterLat=startPos[0],
-            filterLng=startPos[1],
-            filterRange=driver.max_distance
-        ) and checkInnerPos(
-            centerLat=driver.common_start_pos_lat,
-            centerLng=driver.common_start_pos_lng,
-            filterLat=endPos[0],
-            filterLng=endPos[1],
-            filterRange=driver.max_distance
-        ) and getDeltaTime(driver.time_avail.start_time, sTime) <= (getInt(driver.time_avail.duration) * 60)
-    return False
+    return driver.isDBConsistent() and driver.isValid() and checkInnerPos(
+        centerLat=driver.common_start_pos.lat,
+        centerLng=driver.common_start_pos.lng,
+        filterLat=startPos[0],
+        filterLng=startPos[1],
+        filterRange=driver.max_distance
+    ) and checkInnerPos(
+        centerLat=driver.common_start_pos.lat,
+        centerLng=driver.common_start_pos.lng,
+        filterLat=endPos[0],
+        filterLng=endPos[1],
+        filterRange=driver.max_distance
+    ) and getDeltaTime(driver.time_avail.start_time, sTime) <= (getInt(driver.time_avail.duration) * 60)
 
 
 def createTempTravel(driver, startPos, endPos, sTime, sDay):

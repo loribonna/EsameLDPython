@@ -18,6 +18,22 @@ const abs = (n) => {
     return n > 0 ? n : -n;
 }
 
+const getDate = (day: String, time: String) => {
+    if (!day || !time) {
+        return null
+    }
+    const dayParts = day.split('/');
+    const timeParts = time.split(':');
+    if (dayParts.length == 3 && timeParts.length == 2) {
+        const year = dayParts[2].length == 2 ? 2000 + Number(dayParts[2]) : Number(dayParts[2])
+        const retDate =  new Date(
+            year,  Number(dayParts[1]),  Number(dayParts[0]),  Number(timeParts[1]),  Number(timeParts[0])
+        )
+        return !isNaN(retDate.getTime()) ? retDate : null;
+    }
+    return null
+}
+
 const checkDateDifference = (start, end, maxDiff?) => {
     if (!maxDiff) {
         return start - end > 0

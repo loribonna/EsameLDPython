@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from datetime import datetime
 from .models import Driver, TimeAvail
 from travels.models import Travel
+from map.models import PosLatLng
 
 def checkDriverGroup(user):
     if user:
@@ -37,12 +38,16 @@ def driverProfile(request):
             start_time=request.POST['start_time'],
             duration=request.POST['duration']
         )
+
+        pos, created = PosLatLng.objects.get_or_create(
+            lat=request.POST['common_start_pos.lat'],
+            lng=request.POST['common_start_pos.lng']
+        )
         time_avail.save()
         driver.rate_per_km=request.POST['rate_per_km']
         driver.name=request.POST['name']
         driver.info=request.POST['info']
-        driver.common_start_pos_lat=request.POST['common_start_pos.lat']
-        driver.common_start_pos_lng=request.POST['common_start_pos.lng']
+        driver.common_start_pos=pos
         driver.max_distance=request.POST['max_distance']
         driver.time_avail=time_avail
         driver.save()

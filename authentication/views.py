@@ -9,6 +9,9 @@ from django.contrib.auth.models import Permission
 
 
 def registerForm(request):
+    if request.user.is_authenticated:
+        logout(request)
+    
     if 'username' in request.POST and 'password' in request.POST:
         username = request.POST['username']
         password = request.POST['password']

@@ -34,11 +34,8 @@ window.onload = function () {
             },
             sendData(event) {
                 if (this.validators.sTime && this.validators.sDay) {
-                    const start_date_time = new Date(this.sDay);
-                    const timeParts = this.sTime.split(':');
-                    start_date_time.setHours(timeParts[0]);
-                    start_date_time.setMinutes(timeParts[1]);
-                    if (start_date_time.getTime() > Date.now()) {
+                    const start_date_time = getDate(this.sDay, this.sTime)
+                    if (start_date_time && (start_date_time.getTime() > Date.now())) {
                         location.href = `/map/calc?start=${this.getLatLng(this.markers.start._latlng)}&end=${this.getLatLng(this.markers.end._latlng)}&sTime=${this.sTime}&sDay=${this.sDay}`;
                     } else {
                         this.time_error = true;
