@@ -53,6 +53,13 @@ def adminTravelsPage(request):
             Travel.objects.get(pk=request.GET['removeTravel']).delete()
         except ObjectDoesNotExist:
             print('Travel deleted error')
+    if 'denyRef' in request.GET:
+        try:
+            travel = Travel.objects.get(pk=request.GET['acceptRef'])
+            travel.denyRefRequest()
+        except ObjectDoesNotExist:
+            print('Travel deleted error')
+
     travels = Travel.objects.filter(refound_request=True)
     context = {
         'travels': [t.getTravelDict() for t in travels]

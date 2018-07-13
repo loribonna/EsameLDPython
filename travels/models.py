@@ -33,6 +33,10 @@ class Travel(models.Model):
         self.save()
         print('MOCK')
 
+    def denyRefRequest(self):
+        self.refound_request = False
+        self.save()
+
     def isRemovable(self):
         diff = self.start_date_time - datetime.now()
         return self.start_date_time != None and self.start_date_time > datetime.now() and diff.seconds >= MAX_DATE_DIFF

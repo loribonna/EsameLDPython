@@ -5,7 +5,8 @@ const travelAdminListItemComponent = {
         <span class="ld-admin-list-item">Data/Ora inizio:<br/>{{formatDate(content.start_date_time)}}</span>
         <span class="ld-admin-list-item">Cliente:<br>{{content.client}}</span>
         <span class="ld-admin-list-item">Autista:<br>{{content.driver}}</span>
-        <ld-button v-if="content.refound_request=='1'" style="margin-right:5px" v-on:click="acceptRefound" btnType="warning">Accetta rimborso <span class="fa fa-recycle"></span></ld-button>
+        <ld-button v-if="content.refound_request=='1'" style="margin-right:5px" v-on:click="acceptRefound" btnType="warning">Accetta<br> rimborso <span class="fa fa-recycle"></span></ld-button>
+        <ld-button v-if="content.refound_request=='1'" style="margin-right:5px" v-on:click="denyRefound" btnType="warning">Respingi<br> rimborso <span class="fa fa-recycle"></span></ld-button>
         <ld-button v-on:click="removeTravel" v-if="checkRemovable()" btnType="danger">X</ld-button>
         </div>`,
     props: [
@@ -33,6 +34,9 @@ const travelAdminListItemComponent = {
             } else {
                 return ''
             }
+        },
+        denyRefound() {
+            this.$emit('submit', { name: 'denyRef', content: this.content.id });
         },
         acceptRefound() {
             this.$emit('submit', { name: 'acceptRef', content: this.content.id });

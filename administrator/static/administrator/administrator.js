@@ -1,5 +1,5 @@
 var travelAdminListItemComponent = {
-    template: "<div style=\"display: flex;\" class=\"list-group-item list-group-item-action\">\n        <span class=\"ld-admin-list-item\">Posizione di partenza:<br/>{{getPositionFormatted(content.start_pos)}}</span>\n        <span class=\"ld-admin-list-item\">Posizione di arrivo:<br/>{{getPositionFormatted(content.end_pos)}}</span>\n        <span class=\"ld-admin-list-item\">Data/Ora inizio:<br/>{{formatDate(content.start_date_time)}}</span>\n        <span class=\"ld-admin-list-item\">Cliente:<br>{{content.client}}</span>\n        <span class=\"ld-admin-list-item\">Autista:<br>{{content.driver}}</span>\n        <ld-button v-if=\"content.refound_request=='1'\" style=\"margin-right:5px\" v-on:click=\"acceptRefound\" btnType=\"warning\">Accetta rimborso <span class=\"fa fa-recycle\"></span></ld-button>\n        <ld-button v-on:click=\"removeTravel\" v-if=\"checkRemovable()\" btnType=\"danger\">X</ld-button>\n        </div>",
+    template: "<div style=\"display: flex;\" class=\"list-group-item list-group-item-action\">\n        <span class=\"ld-admin-list-item\">Posizione di partenza:<br/>{{getPositionFormatted(content.start_pos)}}</span>\n        <span class=\"ld-admin-list-item\">Posizione di arrivo:<br/>{{getPositionFormatted(content.end_pos)}}</span>\n        <span class=\"ld-admin-list-item\">Data/Ora inizio:<br/>{{formatDate(content.start_date_time)}}</span>\n        <span class=\"ld-admin-list-item\">Cliente:<br>{{content.client}}</span>\n        <span class=\"ld-admin-list-item\">Autista:<br>{{content.driver}}</span>\n        <ld-button v-if=\"content.refound_request=='1'\" style=\"margin-right:5px\" v-on:click=\"acceptRefound\" btnType=\"warning\">Accetta<br> rimborso <span class=\"fa fa-recycle\"></span></ld-button>\n        <ld-button v-if=\"content.refound_request=='1'\" style=\"margin-right:5px\" v-on:click=\"denyRefound\" btnType=\"warning\">Respingi<br> rimborso <span class=\"fa fa-recycle\"></span></ld-button>\n        <ld-button v-on:click=\"removeTravel\" v-if=\"checkRemovable()\" btnType=\"danger\">X</ld-button>\n        </div>",
     props: [
         'content'
     ],
@@ -26,6 +26,9 @@ var travelAdminListItemComponent = {
             else {
                 return '';
             }
+        },
+        denyRefound: function () {
+            this.$emit('submit', { name: 'denyRef', content: this.content.id });
         },
         acceptRefound: function () {
             this.$emit('submit', { name: 'acceptRef', content: this.content.id });
