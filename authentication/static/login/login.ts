@@ -2,7 +2,7 @@ interface IUserBase {
     name: String,
     info: String,
     enable_driver: Boolean,
-    reportes: Number,
+    reports: Number,
     black_listed: Boolean,
     user_type: String
 }

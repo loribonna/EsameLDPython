@@ -15,7 +15,7 @@ def reportUser(usertype, id):
             user = Client.objects.get(pk=id)
         else:
             return
-        user.reportes += 1
+        user.reports += 1
         user.save()
     except ObjectDoesNotExist:
         print('User deleted error')

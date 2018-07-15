@@ -23,12 +23,12 @@ class Travel(models.Model):
     def reportDriver(self):
         if not self.driver_reported:
             self.driver_reported = True
-            self.driver.reportes += 1
+            self.driver.reports += 1
             self.save()
             return True
         return False
 
-    def accpetRefRequest(self):
+    def acceptRefRequest(self):
         self.refound_request = False
         self.save()
         print('MOCK')

@@ -60,10 +60,10 @@ class TravelModelTests(TestCase):
         )
         ret = travel.reportDriver()
         self.assertEqual(ret, True)
-        self.assertEqual(driver.reportes, 1)
+        self.assertEqual(driver.reports, 1)
         ret = travel.reportDriver()
         self.assertEqual(ret, False)
-        self.assertEqual(driver.reportes, 1)
+        self.assertEqual(driver.reports, 1)
 
     def test_ref_request(self):
         client = Client.objects.create_user("client", "client@client.it", "clientPass")

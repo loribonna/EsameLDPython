@@ -24,7 +24,7 @@ def travelsList(request):
 @login_required
 @user_passes_test(checkDriverGroup, login_url='/auth/login')
 def driverProfile(request):
-    driver = Driver.objects.get(username=request.user)
+    driver = Driver.objects.get(username=request.user.username)
 
     if ('rate_per_km' in request.POST
         and 'common_start_pos.lat' in request.POST

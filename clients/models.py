@@ -13,6 +13,6 @@ class Client(UserBase):
             'user': getFieldIfExists(self.username),
             'id': self.pk,
             'info': getFieldIfExists(self.info),    
-            'reports': getFieldIfExists(self.reportes),
+            'reports': getFieldIfExists(self.reports),
             'black_listed': 1 if self.black_listed else 0,
         }
