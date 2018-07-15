@@ -24,6 +24,7 @@ class Travel(models.Model):
         if not self.driver_reported:
             self.driver_reported = True
             self.driver.reports += 1
+            self.driver.save()
             self.save()
             return True
         return False
