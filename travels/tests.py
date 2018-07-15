@@ -87,7 +87,7 @@ class TravelModelTests(TestCase):
             fee=fee,
         )
         travel.refound_request = True
-        travel.accpetRefRequest()
+        travel.acceptRefRequest()
         self.assertEqual(travel.refound_request, False)
         
         travel.refound_request = True
