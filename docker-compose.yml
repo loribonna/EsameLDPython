@@ -1,11 +1,6 @@
 version: '2.1'
 
 services:
-  #mongodb:
-  #  image: mongo
-  #  container_name: mongodb
-  #  ports:
-  #    - "27017:27017"
   mysql_db:
     image: mysql:5.7
     container_name: mysql_db
@@ -27,13 +22,11 @@ services:
     command: [sh, docker-startup.sh] #python3 manage.py runserver 0.0.0.0:8000
     build: .
     environment:
-      - MONGO_URI=mongodb
       - MYSQL_URI=mysql_db
     ports:
       - "8000:8000"
     links:
       - mysql_db
-    #  - mongodb
     depends_on:
       mysql_db:
         condition: service_healthy

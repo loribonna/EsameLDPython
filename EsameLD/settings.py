@@ -90,12 +90,6 @@ DATABASES = {
         'PASSWORD': 'django_db_pass',
         'PORT': 3306,
         'HOST': os.environ.get('MYSQL_URI', default='')
-    },
-    'secondary': {
-        'ENGINE': 'djongo',
-        'NAME': 'django_db',
-        'PORT': 27017,
-        'HOST': os.environ.get('MONGO_URI', default='')
     }
 }
 
