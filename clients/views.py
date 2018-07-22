@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required, permission_required
 from datetime import datetime
 from travels.models import Travel
 from clients.models import Client
@@ -17,14 +17,8 @@ def sendTravelList(request, error=None):
     }
     return render(request, 'clients/clients.html', context=context)
 
-
-def checkClientGroup(user):
-    if user:
-        return user.has_perm("clients.client")
-    return False
-
 @login_required
-@user_passes_test(checkClientGroup, login_url='/auth/login')
+@permission_required("clients.client")
 def travelsList(request):
     if 'refundReq' in request.GET:
         try:
