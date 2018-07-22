@@ -2,6 +2,7 @@ from django.db import models
 from map.models import PosLatLng
 from authentication.models import UserBase
 from datetime import datetime
+from clients.models import Client
 
 def getFieldIfExists(field, subfield = None):
     if field != None:
@@ -23,6 +24,7 @@ class Driver(UserBase):
     common_start_pos = models.ForeignKey(PosLatLng, on_delete=models.CASCADE, null=True)
     max_distance = models.PositiveIntegerField()
     time_avail = models.ForeignKey(TimeAvail, on_delete=models.CASCADE, null=True)
+    clients = models.ManyToManyField(Client, through='travels.Travel')
     class Meta:
         permissions = (('driver', 'DRIVER'),)
 
