@@ -23,6 +23,8 @@ Sia gli utenti di tipo `cliente` che di tipo `autista` necessitano di registrazi
 
 ## Installazione e avvio
 
+La versione seguente include il supporto sia per MongoDB che per MySQL.
+
 ### Tramite docker-compose
 
 Il software Docker è disponibile tramite [questo link](https://docs.docker.com/install/).  
@@ -35,17 +37,22 @@ Verranno scaricati i requisiti necessari e avviato l'applicativo in ascolto sull
 ### Manuale
 
 L'installazione manuale dell'applicazione richiede l'installazione delle dependency del progetto:
-- **MongoDB** (3.6.4),
+- **MongoDB** (3.6.4) o **MySQL Server** (5.7),
 - **NodeJS** (8.9.1) e l'interprete **Typescript** (2.8.3), disponibile via **npm** (5.5.1),
 - interprete **python** (3.6.5) e il framework **django** (2.0.5),
-- **djongo** (1.2.27), disponibile tramite **pip**.
+- **djongo** (1.2.27) o **mysqlclient**, disponibili tramite **pip**.
 
-1. Il software utilizza **MongoDB** come Database.
+1. (a) Il software utilizza **MongoDB** come Database.
 
     Per installare la versione più aggiornata di MongoDB, seguire le istruzioni di installazione per la propria piattaforma:
     - [Istruzioni per Linux](https://docs.mongodb.com/manual/administration/install-on-linux/),
     - [Istruzioni per Windows](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/),
     - [Istruzioni per MacOS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
+
+1. (b) Il software utilizza **MySQL** come Database.
+
+    Per installare la versione più aggiornata di MySQL Server, seguire le istruzioni di installazione per la propria piattaforma:
+    - Istruzioni per Linux (Ubuntu): `sudo apt-get install mysql-server`
 
 2. (Opzionale) Il software utilizza **npm** per automatizzare il processo di pre-compilazione e avvio dell'applicativo
     
@@ -55,9 +62,20 @@ L'installazione manuale dell'applicazione richiede l'installazione delle depende
 
     Npm è disponibile, unitamente a Node, via package manager su linux seguendo [queste istruzioni](https://nodejs.org/en/download/package-manager/).
 
-3. Installare l'interprete **python** e il framework **django**. Installare l'engine **djongo** tramite il comando `pip install djongo`.
+3. Installare l'interprete **python** e il framework **django**.
 
-Per avviare l'applicazione, assicurarsi che il demone di MongoDB sia in esecuzione ed eseguire:
+    Installare l'engine **djongo** tramite il comando `pip install djongo` se si intende utilizzare MongoDB.
+
+    Installare il client **mysqlclient** tramite il comando `pip install mysqlclient`, se si intende utilizzare MySQL. 
+        In caso di errori, provare ad installare tramite file binari: `pip install --only-binary :all: mysqlclient`.
+
+4. (SOLO MySQL) Creare il Database e l'utente che Django andrà ad utilizzare:
+    - Accedere alla console di MySQL tramite `mysql --user=root -p`, inserendo la password quando richiesta.
+    - Eseguire la query SQL per creare il database 'django_db': `CREATE DATABASE django_db;`.
+    - Creare l'utente: `CREATE USER 'django_user'@'localhost' IDENTIFIED BY 'djangopass';`.
+    - Assegnare pieni privilegi all'utente sul Database: `GRANT ALL PRIVILEGES ON django_db.* TO 'django_user'@'localhost' WITH GRANT OPTION;`.
+
+Per avviare l'applicazione, assicurarsi che il demone di MongoDB o il servizio MySQL Server sia in esecuzione ed eseguire:
 
 - In caso di primo avvio eseguire:
     ```
@@ -69,7 +87,7 @@ Per avviare l'applicazione, assicurarsi che il demone di MongoDB sia in esecuzio
 
 - Se npm è installato tramite il *punto 2 (opzionale)*, eseguire `npm start` per avviare l'applicativo. 
 
-## Caricamento dump di memoria per testing e sviluppo
+## Caricamento dump di memoria per testing e sviluppo (SOLO MongoDB)
 
 Il file `dump_mongo.tgz` contiene un dump del Database usato in fase di sviluppo/debug con qualche utente di prova e un utente di tipo superuser.
 Per caricare il file di dump è necessario:
