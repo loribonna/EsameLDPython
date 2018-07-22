@@ -1,17 +1,12 @@
 from math import sin, cos, sqrt, atan2
 from datetime import datetime
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required, permission_required
 from drivers.models import Driver
 from clients.models import Client
 from travels.models import Travel
 from map.models import PosLatLng
 from django.db.models import F
-
-def checkClientGroup(user):
-    if user:
-        return user.has_perm("clients.client")
-    return False
 
 def getInt(strng):
     return int(strng)
@@ -82,13 +77,13 @@ def createTempTravel(driver, startPos, endPos, sTime, sDay):
     return {}
 
 @login_required
-@user_passes_test(checkClientGroup, login_url='/auth/login')
+@permission_required("clients.client")
 def mapView(request):
     return render(request, 'map/map.html')
 
 
 @login_required
-@user_passes_test(checkClientGroup, login_url='/auth/login')
+@permission_required("clients.client")
 def result(request):
     if 'start' in request.GET and 'end' in request.GET and 'sTime' in request.GET and 'sDay' in request.GET:
         startPos = getLatLngFromString(request.GET['start'])
@@ -104,7 +99,7 @@ def result(request):
 
 
 @login_required
-@user_passes_test(checkClientGroup, login_url='/auth/login')
+@permission_required("clients.client")
 def confirm(request):
     if ('fee' in request.POST
         and 'start_date_time' in request.POST

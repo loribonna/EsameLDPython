@@ -1,18 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required, permission_required
 from datetime import datetime
 from .models import Driver, TimeAvail
 from travels.models import Travel
 from map.models import PosLatLng
 
-def checkDriverGroup(user):
-    if user:
-        return user.has_perm("drivers.driver")
-    return False
-
 @login_required
-@user_passes_test(checkDriverGroup, login_url='/auth/login')
+@permission_required("drivers.driver")
 def travelsList(request):
     travels = Travel.objects.filter(driver__username=request.user)
     context = {
@@ -22,7 +17,7 @@ def travelsList(request):
 
 
 @login_required
-@user_passes_test(checkDriverGroup, login_url='/auth/login')
+@permission_required("drivers.driver")
 def driverProfile(request):
     driver = Driver.objects.get(username=request.user.username)
 
