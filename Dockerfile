@@ -1,10 +1,12 @@
 
 # See https://hub.docker.com/r/library/python/ for all supported Python
-FROM python:3.6.5-alpine
+FROM python:3.6.6-jessie
 
 LABEL Name=esameld Version=0.0.1
 
 COPY requirements.txt .
+RUN PATH=/usr/local/mysql/bin/:$PATH
+RUN apt-get install libmysqlclient-dev;
 RUN python3 -m pip install -r requirements.txt
 
 RUN mkdir /code

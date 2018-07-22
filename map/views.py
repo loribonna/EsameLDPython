@@ -77,13 +77,13 @@ def createTempTravel(driver, startPos, endPos, sTime, sDay):
     return {}
 
 @login_required
-@permission_required("drivers.driver")
+@permission_required("clients.client")
 def mapView(request):
     return render(request, 'map/map.html')
 
 
 @login_required
-@permission_required("drivers.driver")
+@permission_required("clients.client")
 def result(request):
     if 'start' in request.GET and 'end' in request.GET and 'sTime' in request.GET and 'sDay' in request.GET:
         startPos = getLatLngFromString(request.GET['start'])
@@ -99,7 +99,7 @@ def result(request):
 
 
 @login_required
-@permission_required("drivers.driver")
+@permission_required("clients.client")
 def confirm(request):
     if ('fee' in request.POST
         and 'start_date_time' in request.POST

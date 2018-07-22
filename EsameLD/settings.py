@@ -84,6 +84,14 @@ WSGI_APPLICATION = 'EsameLD.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django_db',
+        'USER': 'django_user',
+        'PASSWORD': 'django_db_pass',
+        'PORT': 3306,
+        'HOST': os.environ.get('MYSQL_URI', default='')
+    },
+    'secondary': {
         'ENGINE': 'djongo',
         'NAME': 'django_db',
         'PORT': 27017,

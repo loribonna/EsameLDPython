@@ -20,9 +20,9 @@ class TimeAvail(models.Model):
 
 
 class Driver(UserBase):
-    rate_per_km = models.FloatField()
+    rate_per_km = models.FloatField(null=True)
     common_start_pos = models.ForeignKey(PosLatLng, on_delete=models.CASCADE, null=True)
-    max_distance = models.PositiveIntegerField()
+    max_distance = models.PositiveIntegerField(null=True)
     time_avail = models.ForeignKey(TimeAvail, on_delete=models.CASCADE, null=True)
     clients = models.ManyToManyField(Client, through='travels.Travel')
     class Meta:
