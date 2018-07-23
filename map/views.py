@@ -91,7 +91,7 @@ def result(request):
         sTime = request.GET['sTime']
         sDay = request.GET['sDay']
         if startPos.__len__() == 2 and endPos.__len__() == 2:
-            drivers = [d for d in Driver.objects.all() if checkValidDriver(d, startPos, endPos, sTime)]
+            drivers = (d for d in Driver.objects.all() if checkValidDriver(d, startPos, endPos, sTime))
             context = [createTempTravel(d, startPos, endPos, sTime, sDay) for d in drivers]
             return render(request, 'result/result.html', context={'results': context})
 
