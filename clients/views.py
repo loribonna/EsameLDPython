@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from datetime import datetime
@@ -28,6 +28,7 @@ def travelsList(request):
                 return sendTravelList(request, error='Permission Error')
             travel.refound_request = True
             travel.save()
+            return redirect('/clients')
         except ObjectDoesNotExist:
             return sendTravelList(request, error='Travel not exists')
 
@@ -39,6 +40,7 @@ def travelsList(request):
             status = travel.reportDriver()
             if not status:
                 return sendTravelList(request, error="Double report error")
+            return redirect('/clients')
         except ObjectDoesNotExist:
             return sendTravelList(request, error='Travel not exists')
     if 'removeTravel' in request.GET:
@@ -47,7 +49,7 @@ def travelsList(request):
             if not travel.isRemovable() or travel.client.username != request.user.username:
                 return sendTravelList(request, error='Permission Error')
             travel.delete()
-            
+            return redirect('/clients')
         except ObjectDoesNotExist:
             return sendTravelList(request, error='Travel not exists')
 

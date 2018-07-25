@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from datetime import datetime
 from travels.models import Travel
 from django.core.exceptions import ObjectDoesNotExist
@@ -46,17 +46,20 @@ def adminTravelsPage(request):
         try:
             travel = Travel.objects.get(pk=request.GET['acceptRef'])
             travel.accpetRefRequest()
+            return redirect('/administrator')
         except ObjectDoesNotExist:
             print('Travel deleted error')
     if 'removeTravel' in request.GET:
         try:
             Travel.objects.get(pk=request.GET['removeTravel']).delete()
+            return redirect('/administrator')
         except ObjectDoesNotExist:
             print('Travel deleted error')
     if 'denyRef' in request.GET:
         try:
             travel = Travel.objects.get(pk=request.GET['denyRef'])
             travel.denyRefRequest()
+            return redirect('/administrator')
         except ObjectDoesNotExist:
             print('Travel deleted error')
 
@@ -73,13 +76,13 @@ def adminUsersPage(request):
         usertype=request.GET['user_type']
         if 'blackListUser' in request.GET:
             blackListUser(usertype, int(request.GET['blackListUser']))
-        
+            return redirect('/administrator/users')
         if 'unBlackListUser' in request.GET:
             blackListUser(usertype, int(request.GET['unBlackListUser']), False)
-
+            return redirect('/administrator/users')
         if 'reportUser' in request.GET:
             reportUser(usertype, int(request.GET['reportUser']))
-    
+            return redirect('/administrator/users')
     drivers = Driver.objects.all()
     clients = Client.objects.all()
     context = {

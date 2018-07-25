@@ -2,7 +2,7 @@ from django.db import models
 from clients.models import Client
 from drivers.models import Driver
 from map.models import PosLatLng
-from datetime import datetime
+from django.utils import timezone
 
 DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S'
 MAX_DATE_DIFF = 15 * 60; # 15 minutes
@@ -12,7 +12,7 @@ class Travel(models.Model):
     driver = models.ForeignKey(Driver, on_delete=models.DO_NOTHING)
     fee = models.FloatField(default=0)
     start_date_time = models.DateTimeField(blank=True)
-    end_date_time = models.DateTimeField(blank=True)
+    end_date_time = models.DateTimeField(blank=True, null=True)
     start_pos = models.ForeignKey(
         PosLatLng, on_delete=models.CASCADE, related_name='startPos')
     end_pos = models.ForeignKey(
@@ -39,8 +39,8 @@ class Travel(models.Model):
         self.save()
 
     def isRemovable(self):
-        diff = self.start_date_time - datetime.now()
-        return self.start_date_time != None and self.start_date_time > datetime.now() and diff.seconds >= MAX_DATE_DIFF
+        diff = self.start_date_time - timezone.now()
+        return self.start_date_time != None and self.start_date_time > timezone.now() and diff.seconds >= MAX_DATE_DIFF
 
     def getTravelDict(self):
         if self.driver != None:
