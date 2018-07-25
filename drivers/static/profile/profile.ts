@@ -26,6 +26,7 @@ window.onload = function () {
         },
         data: function () {
             return {
+                duration_error: false,
                 db_consistent: false,
                 enable_error: false,
                 profile: {
@@ -49,6 +50,12 @@ window.onload = function () {
                 if (Object.keys(this.checkers).find(p => !this.checkers[p])) {
                     event.preventDefault();
                     this.enable_error = true;
+                    return;
+                }
+                const hour = parseInt(this.profile.start_time.split(':')[0]);
+                if (hour + parseInt(this.profile.duration) >= 24) {
+                    event.preventDefault();
+                    this.duration_error = true;
                 }
             },
             validCheck(event) {

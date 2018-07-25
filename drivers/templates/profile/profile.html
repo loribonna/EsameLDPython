@@ -49,6 +49,7 @@
             <span class="ld-driver-profile-cell" >
                 <ld-badge>Durata disponibilità (ore)</ld-badge>
                 <text-input style="width: 100%" validator="numberValidator" class="ld-driver-profile-cell" name="duration" placeholder="Durata disponibilità" v-model="profile.duration" v-on:valid="validCheck" :enable_error="enable_error" required=true></text-input>
+                <ld-badge v-if="duration_error" style="background-color:red; color: white">LA DISPONIBILITÀ È GIORNALIERA (DURATA TROPPO ELEVATA).</ld-badge>
             </span>
         </div>
         <ld-button tooltip="Salva le modifiche" style="margin-left: 5px" v-on:click="submitForm">Salva</ld-button>
